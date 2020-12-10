@@ -19,7 +19,7 @@ export default function Home() {
               <h3 className={"text-indigo-600 hover:text-indigo-500"}>
                 <Link href={`/server/${server.id}`}>{server.title}</Link>
               </h3>
-              <div class={"text-gray-400 text-sm"}>
+              <div className={"text-gray-400 text-sm"}>
                 {server.voteCount} votes
               </div>
             </article>

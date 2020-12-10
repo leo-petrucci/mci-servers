@@ -1,4 +1,5 @@
 import request, { gql } from "graphql-request";
+import { GetStaticProps, GetStaticPaths } from "next";
 import { endpoint } from "../_app";
 import Server from "../../components/server";
 import { useRouter } from "next/router";
@@ -21,7 +22,7 @@ export default function ServerPage({ server }) {
   );
 }
 
-export async function getStaticProps(context) {
+export const getStaticProps: GetStaticProps = async (context) => {
   const { server } = await request(
     endpoint,
     gql`
@@ -41,9 +42,9 @@ export async function getStaticProps(context) {
   return {
     props: { server }, // will be passed to the page component as props
   };
-}
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const { feed } = await request(
     endpoint,
     gql`
@@ -68,4 +69,4 @@ export async function getStaticPaths() {
     paths,
     fallback: true,
   };
-}
+};
