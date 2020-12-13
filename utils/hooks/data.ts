@@ -43,6 +43,8 @@ export async function getServers(
           title
           voteCount
           canVote
+          cover
+          content
         }
       }
     `
