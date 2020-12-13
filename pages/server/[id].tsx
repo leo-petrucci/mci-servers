@@ -1,43 +1,38 @@
-import request, { gql } from "graphql-request";
-import { GetStaticProps, GetStaticPaths } from "next";
-import { endpoint } from "../_app";
-import Server from "../../components/server";
-import { useRouter } from "next/router";
-import { useServer } from "../../utils/hooks/data";
+import React from 'react';
+import request, { gql } from 'graphql-request';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
+import { endpoint } from '../_app';
+import Server from '../../components/server';
+import {
+  getServer,
+  ServerObjectInterface,
+  useServer,
+} from '../../utils/hooks/data';
 
-export default function ServerPage({ server }) {
+const ServerPage = ({
+  server,
+}: {
+  server: ServerObjectInterface;
+}): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id);
+  const { data, isFetching } = useServer(router.query.id as string);
   if (server)
     return (
-      <main className={"m-4"}>
+      <main className="m-4">
         <Server server={server} />
       </main>
     );
   if (isFetching) return <>Loading...</>;
   return (
-    <main className={"m-4"}>
+    <main className="m-4">
       <Server server={data} />
     </main>
   );
-}
+};
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const { server } = await request(
-    endpoint,
-    gql`
-      query {
-        server(id: ${context.params.id}) {
-          title
-          content
-          voteCount
-          canVote
-        }
-      }
-    `
-  );
-
-  console.log("generating server", context.params.id);
+  const server = await getServer(context.params.id as string);
 
   return {
     props: { server }, // will be passed to the page component as props
@@ -59,14 +54,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   let paths = feed.map((server) => {
     if (server.voteCount > 0) return { params: { id: server.id.toString() } };
+    return null;
   });
 
-  paths = paths.filter((server) => server != undefined);
-
-  console.log(paths);
+  paths = paths.filter((server) => server !== null);
 
   return {
     paths,
     fallback: true,
   };
 };
+
+export default ServerPage;

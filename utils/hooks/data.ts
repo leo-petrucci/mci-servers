@@ -1,41 +1,67 @@
-import request, { gql } from "graphql-request";
-import { useQuery } from "react-query";
-import { endpoint } from "../../pages/_app";
+import request, { gql } from 'graphql-request';
+import { QueryResult, useQuery } from 'react-query';
+import { endpoint } from '../../pages/_app';
 
-export function useServers() {
-  return useQuery("servers", async () => {
-    const { feed } = await request(
-      endpoint,
-      gql`
+export interface ServerObjectInterface {
+  id: number;
+  title: string;
+  content: string;
+  slots: number;
+  cover: string;
+  voteCount: number;
+  canVote: boolean;
+}
+
+export async function getServer(id: string): Promise<ServerObjectInterface> {
+  const { server } = await request(
+    endpoint,
+    gql`
         query {
-          feed(date: "2020-09-01") {
+          server(id: ${id}) {
             id
             title
+            content
+            slots
+            cover
             voteCount
             canVote
           }
         }
       `
-    );
-    return feed;
-  });
+  );
+  return server;
+}
+export async function getServers(
+  date?: string
+): Promise<ServerObjectInterface[]> {
+  const { feed } = await request(
+    endpoint,
+    gql`
+      query {
+        feed ${date ? `(date: "${date}")` : ''} {
+          id
+          title
+          voteCount
+          canVote
+        }
+      }
+    `
+  );
+  return feed;
 }
 
-export function useServer(id) {
-  return useQuery("server", async () => {
-    const { server } = await request(
-      endpoint,
-      gql`
-          query {
-            server(id: ${id}) {
-              title
-              content
-              voteCount
-              canVote
-            }
-          }
-        `
-    );
+export const useServers = (
+  date?: string
+): QueryResult<ServerObjectInterface[], unknown> =>
+  useQuery('servers', async () => {
+    const servers = await getServers(date);
+    return servers;
+  });
+
+export const useServer = (
+  id: string
+): QueryResult<ServerObjectInterface, unknown> =>
+  useQuery('server', async () => {
+    const server = await getServer(id);
     return server;
   });
-}
