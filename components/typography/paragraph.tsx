@@ -8,7 +8,7 @@ const Paragraph = ({
   lines?: number;
 }): JSX.Element => (
   <div
-    className="overflow-hidden"
+    className="overflow-hidden text-gray-500"
     style={{
       WebkitLineClamp: lines,
       display: '-webkit-box',
@@ -22,13 +22,5 @@ const Paragraph = ({
 Paragraph.defaultProps = {
   lines: 0,
 };
-
-// overflow: hidden;
-// font-weight: 600;
-// margin-bottom: 0.25rem;
-// width: 100%;
-// display: -webkit-box;
-// -webkit-line-clamp: 3;
-// -webkit-box-orient: vertical;
 
 export default Paragraph;

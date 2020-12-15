@@ -9,8 +9,10 @@ const Home = (): JSX.Element => {
   const { data, isFetching } = useServers();
   return (
     <>
-      {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
-      <Title level={2}>{"I nostri server piu' poplari"}</Title>
+      <div className="mb-4">
+        {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
+        <Title level={2}>{"I nostri server piu' poplari"}</Title>
+      </div>
       {isFetching ? (
         'Loading...'
       ) : (
