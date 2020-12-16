@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
-import Modal from 'components/modal';
+import Overlay from 'components/server/overlay';
 import { useServers } from '../utils/hooks/data';
 
 const { Title } = Typography;
-const { confirm } = Modal;
+
+const { open } = Overlay;
 
 const Home = (): JSX.Element => {
   const { data, isFetching } = useServers();
@@ -14,7 +15,7 @@ const Home = (): JSX.Element => {
       <button
         type="button"
         onClick={() =>
-          confirm({ content: 'Test', onCancel: () => console.log('poo') })
+          open({ children: 'Test', onCancel: () => console.log('poo') })
         }
       >
         Open
