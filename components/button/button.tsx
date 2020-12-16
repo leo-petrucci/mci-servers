@@ -1,5 +1,5 @@
-import Icon from 'components/icon';
 import React from 'react';
+import Icon from '../icon';
 
 export interface ButtonPropsInterface {
   children?: React.ReactNode;
@@ -54,7 +54,7 @@ const Button = ({
   const sizeFunc = () => {
     switch (size) {
       case 'xsmall':
-        return `h-8 ${prefSuffFunc(1)}`;
+        return `h-6 ${prefSuffFunc(1)}`;
       case 'small':
         return `h-10 ${prefSuffFunc(2)}`;
       default:
@@ -116,7 +116,7 @@ const Button = ({
     >
       <span className="flex items-center justify-center">
         {loading ? (
-          <span className="mr-2">
+          <span className="mr-2 button-loading">
             <Icon.Spinner>
               <path
                 d="M2 12C2 6.47715 6.47715 2 12 2V5C8.13401 5 5 8.13401 5 12H2Z"
