@@ -81,12 +81,12 @@ const Button = ({
     switch (faded) {
       default:
       case true:
-        return `bg-emerald-50 border-gray-300 hover:border-indigo-300 ${
+        return `bg-emerald-50 border-gray-300 hover:border-emerald-500 ${
           !disabled ? 'hover:bg-emerald-100' : ''
-        }	text-green-600 focus:outline-none focus:ring-2 focus:ring-blue-100`;
+        }	text-green-600 focus:outline-none focus:ring-2 focus:ring-green-100`;
       case false:
-        return `bg-blue-600 ${!disabled ? 'hover:bg-blue-500' : ''}
-          text-white focus:outline-none focus:ring-2 focus:ring-blue-100`;
+        return `bg-blue-600 ${!disabled ? 'hover:bg-emerald-500' : ''}
+          text-white focus:outline-none focus:ring-2 focus:ring-green-100`;
     }
   };
 
