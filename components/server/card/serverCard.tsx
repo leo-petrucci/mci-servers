@@ -5,6 +5,7 @@ import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
+import { useLocation } from 'wouter';
 
 const { Paragraph, Title } = Typography;
 
@@ -13,6 +14,7 @@ const ServerCard = ({
 }: {
   server: ServerObjectInterface;
 }): JSX.Element => {
+  const [, setLocation] = useLocation();
   const { id, title, voteCount, cover, content } = server;
   return (
     <>
@@ -30,7 +32,13 @@ const ServerCard = ({
           <Paragraph lines={4}>{content}</Paragraph>
         </div>
         <div className="col-span-1">
-          <Button faded className="h-full w-full">
+          <Button
+            faded
+            className="h-full w-full"
+            onClick={() => {
+              setLocation('/fuck');
+            }}
+          >
             <Icon size="large">
               <path
                 fillRule="evenodd"
