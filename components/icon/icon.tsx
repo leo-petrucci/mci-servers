@@ -26,7 +26,7 @@ const Icon = ({ children, size }: IconPropsInterface): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
-      className="inline -mt-1"
+      className="inline"
     >
       {children}
     </svg>

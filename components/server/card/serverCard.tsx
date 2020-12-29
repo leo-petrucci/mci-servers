@@ -6,6 +6,7 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
 import { useLocation } from 'wouter';
+import Vote from '../vote';
 
 const { Paragraph, Title } = Typography;
 
@@ -15,20 +16,30 @@ const ServerCard = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const [, setLocation] = useLocation();
-  const { id, title, voteCount, cover, content } = server;
+  const { id, title, voteCount, cover, content, tags } = server;
+  console.log(tags);
   return (
     <>
       <article className="grid grid-cols-12 mb-4 p-2">
+        <div className="col-span-1 mr-4">
+          <Vote voteCount={voteCount} serverId={id} />
+        </div>
         <div
           style={{ backgroundImage: `url(${cover})` }}
           className="bg-cover self-stretch col-span-4 bg-center rounded-xl"
         />
-        <div className="col-span-7 px-4 py-2">
+        <div className="col-span-6 px-4 py-2">
           <Title level={3}>
             <Link href={`/server/${id}`}>{title}</Link>
           </Title>
-          <Tag onClick={() => console.log('shit')}>Test</Tag>
-          <div className="text-gray-400 text-sm">{voteCount} votes</div>
+          <div className="py-1">
+            {tags &&
+              tags.map((tag) => (
+                <Tag key={id} onClick={() => console.log('shit')}>
+                  {tag.tagName}
+                </Tag>
+              ))}
+          </div>
           <Paragraph lines={4}>{content}</Paragraph>
         </div>
         <div className="col-span-1">

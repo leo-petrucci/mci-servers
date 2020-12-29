@@ -10,6 +10,12 @@ export interface ServerObjectInterface {
   cover: string;
   voteCount: number;
   canVote: boolean;
+  tags: TagInterface[];
+}
+
+interface TagInterface {
+  id: number;
+  tagName: string;
 }
 
 export async function getServer(id: string): Promise<ServerObjectInterface> {
@@ -25,6 +31,10 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
             cover
             voteCount
             canVote
+            tags {
+              id
+              tagName
+            }
           }
         }
       `
@@ -45,6 +55,10 @@ export async function getServers(
           canVote
           cover
           content
+          tags {
+            id
+            tagName
+          }
         }
       }
     `
