@@ -34,7 +34,7 @@ const Title = ({ level, children }: TitlePropsInterface): JSX.Element => {
       );
     case 5:
       return (
-        <h5 className="text-md font-semibold text-gray-900 tracking-tight">
+        <h5 className="uppercase tracking-wide font-semibold text-sm lg:text-xs text-gray-900">
           {children}
         </h5>
       );

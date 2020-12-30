@@ -25,9 +25,8 @@ export default function MciServers({
           <div className="col-span-12">
             <Top />
           </div>
-          <aside className="col-span-2 p-4">Sidebar</aside>
-          <main className="col-span-10">
-            <div className="flex justify-center mt-8 mx-4">
+          <main className="col-span-12">
+            <div className="flex justify-center mt-4 mx-4">
               <div style={{ maxWidth: '1152px' }} className="w-full">
                 {/* eslint-disable-next-line react/jsx-props-no-spreading */}
                 <Component {...pageProps} />

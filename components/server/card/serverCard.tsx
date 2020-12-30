@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import React from 'react';
+import { useRouter } from 'next/router';
 import { ServerObjectInterface } from 'utils/hooks/data';
 import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
-import { useLocation } from 'wouter';
 import Vote from '../vote';
 
 const { Paragraph, Title } = Typography;
@@ -15,9 +15,8 @@ const ServerCard = ({
 }: {
   server: ServerObjectInterface;
 }): JSX.Element => {
-  const [, setLocation] = useLocation();
+  const router = useRouter();
   const { id, title, voteCount, cover, content, tags } = server;
-  console.log(tags);
   return (
     <>
       <article className="grid grid-cols-12 mb-4 p-2">
@@ -35,7 +34,7 @@ const ServerCard = ({
           <div className="py-1">
             {tags &&
               tags.map((tag) => (
-                <Tag key={id} onClick={() => console.log('shit')}>
+                <Tag key={tag.id} onClick={() => console.log('shit')}>
                   {tag.tagName}
                 </Tag>
               ))}
@@ -47,7 +46,7 @@ const ServerCard = ({
             faded
             className="h-full w-full"
             onClick={() => {
-              setLocation('/fuck');
+              router.push(`/server/${id}`);
             }}
           >
             <Icon size="large">

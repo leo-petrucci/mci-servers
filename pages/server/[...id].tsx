@@ -17,22 +17,13 @@ const ServerPage = ({
 }): JSX.Element => {
   const router = useRouter();
   const { data, isFetching } = useServer(router.query.id as string);
-  if (server)
-    return (
-      <main className="m-4">
-        <Server server={server} />
-      </main>
-    );
+  if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
-  return (
-    <main className="m-4">
-      <Server server={data} />
-    </main>
-  );
+  return <Server server={data} />;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const server = await getServer(context.params.id as string);
+  const server = await getServer(context.params.id[0] as string);
 
   return {
     props: { server }, // will be passed to the page component as props
