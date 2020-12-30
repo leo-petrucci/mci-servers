@@ -1,17 +1,40 @@
-import "../styles/globals.css";
-import { ReactQueryCacheProvider, QueryCache } from "react-query";
+import React from 'react';
+import '../styles/globals.css';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import type { AppProps } from 'next/app';
 
-import { Hydrate } from "react-query/hydration";
+import Top from 'components/navigation/top';
 
-export const endpoint = "https://api.minecraftitalia.net";
-const queryCache = new QueryCache();
+export const endpoint = 'https://api.minecraftitalia.net';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
-export default function MyApp({ Component, pageProps }) {
+export default function MciServers({
+  Component,
+  pageProps,
+}: AppProps): JSX.Element {
   return (
-    // <ReactQueryCacheProvider queryCache={queryCache}>
-    //   <Hydrate state={pageProps.dehydratedState}>
-    <Component {...pageProps} />
-    //   </Hydrate>
-    // </ReactQueryCacheProvider>
+    <QueryClientProvider client={queryClient}>
+      <div className="m-auto" style={{ maxWidth: '1440px' }}>
+        <div className="grid grid-cols-12">
+          <div className="col-span-12">
+            <Top />
+          </div>
+          <main className="col-span-12">
+            <div className="flex justify-center mt-4 mx-4">
+              <div style={{ maxWidth: '1152px' }} className="w-full">
+                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+                <Component {...pageProps} />
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </QueryClientProvider>
   );
 }
