@@ -1,5 +1,5 @@
 import request, { gql } from 'graphql-request';
-import { QueryObserverResult, useQuery } from 'react-query';
+import { QueryResult, useQuery } from 'react-query';
 import { endpoint } from '../../pages/_app';
 
 export interface ServerObjectInterface {
@@ -52,7 +52,7 @@ export async function getServers(
 
 export const useServers = (
   date?: string
-): QueryObserverResult<ServerObjectInterface[], unknown> =>
+): QueryResult<ServerObjectInterface[], unknown> =>
   useQuery('servers', async () => {
     const servers = await getServers(date);
     return servers;
@@ -60,7 +60,7 @@ export const useServers = (
 
 export const useServer = (
   id: string
-): QueryObserverResult<ServerObjectInterface, unknown> =>
+): QueryResult<ServerObjectInterface, unknown> =>
   useQuery('server', async () => {
     const server = await getServer(id);
     return server;
