@@ -6,16 +6,24 @@ export interface ServerObjectInterface {
   id: number;
   title: string;
   content: string;
+  createdAt: string;
   slots: number;
   cover: string;
   voteCount: number;
   canVote: boolean;
   tags: TagInterface[];
+  author: AuthorInterface;
 }
 
 interface TagInterface {
   id: number;
   tagName: string;
+}
+
+interface AuthorInterface {
+  id: number;
+  username: string;
+  photoUrl: string;
 }
 
 export async function getServer(id: string): Promise<ServerObjectInterface> {
@@ -27,10 +35,16 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
             id
             title
             content
+            createdAt
             slots
             cover
             voteCount
             canVote
+            author {
+              id
+              photoUrl
+              username
+            }
             tags {
               id
               tagName
@@ -51,10 +65,16 @@ export async function getServers(
         feed ${date ? `(date: "${date}")` : ''} {
           id
           title
+          createdAt
           voteCount
           canVote
           cover
           content
+          author {
+            id
+            username
+            photoUrl
+          }
           tags {
             id
             tagName

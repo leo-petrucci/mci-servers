@@ -3,6 +3,7 @@ import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/data';
 import Tag from 'components/tag';
 import Vote from './vote';
+import Author from 'components/author';
 
 const { Title } = Typography;
 
@@ -11,10 +12,24 @@ interface ServerInterface {
 }
 
 const Server = ({ server }: ServerInterface): JSX.Element => {
-  const { title, content, tags, voteCount, id } = server;
+  const { title, content, tags, voteCount, id, author, createdAt } = server;
   return (
     <div className="grid grid-cols-12 gap-4">
+      {/* Sidebar */}
       <aside className="col-span-2 p-4">
+        {/* Profile Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>Postato da</Title>
+          </div>
+          <Author
+            id={author.id}
+            username={author.username}
+            photoUrl={author.photoUrl}
+            subtitle={createdAt}
+          />
+        </div>
+        {/* Tags Container */}
         <div className="mb-4">
           <div className="mb-2">
             <Title level={5}>Tags</Title>
