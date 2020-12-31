@@ -13,19 +13,23 @@ import {
 
 const ServerPage = ({
   server,
-  id,
 }: {
   server: ServerObjectInterface;
-  id: string;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id[0]);
+
+  console.log('page');
+  console.dir(router.query, { depth: null });
+  const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
+  return null;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  console.log('getStaticProps');
+  console.dir(context.params, { depth: null });
   const server = await getServer(context.params.id[0] as string);
 
   return {
@@ -58,6 +62,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
 
   paths = paths.filter((server) => server !== null);
+
+  console.dir(paths, { depth: null });
 
   return {
     paths,
