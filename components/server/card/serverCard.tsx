@@ -30,7 +30,7 @@ const ServerCard = ({
         />
         <div className="col-span-6 px-4 py-2">
           <Title level={3}>
-            <Link href={`/server/${id}/${slugify(title)}`}>{title}</Link>
+            <Link href={`/server/${id}`}>{title}</Link>
           </Title>
           <div className="py-1">
             {tags &&
@@ -47,7 +47,7 @@ const ServerCard = ({
             faded
             className="h-full w-full"
             onClick={() => {
-              router.push(`/server/${id}/${slugify(title)}`);
+              router.push(`/server/${id}`);
             }}
           >
             <Icon size="large">
