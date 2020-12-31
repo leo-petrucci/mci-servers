@@ -22,8 +22,8 @@ const Home = (): JSX.Element => {
         <div className="mb-4">
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>Il top server di {lastMonthName}</Title>
-          {isFetching ? 'Loading...' : <ServerCard server={lastmonthData[0]} />}
         </div>
+        {isFetching ? 'Loading...' : <ServerCard server={lastmonthData[0]} />}
         <div className="mb-4">
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>I nostri server più poplari</Title>
