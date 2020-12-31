@@ -2,6 +2,7 @@ import React from 'react';
 import request, { gql } from 'graphql-request';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
+import slugify from 'slugify';
 import { endpoint } from '../_app';
 import Server from '../../components/server';
 import {
@@ -16,17 +17,20 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  console.log('id is', router.query);
-  const { data, isFetching } = useServer(router.query.id as string);
-  console.log('data is', data);
-  console.log('server', server);
+
+  console.log('page');
+  console.dir(router.query, { depth: null });
+  const { data, isFetching } = useServer(router.query.id[0]);
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
+  return null;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const server = await getServer(context.params.id as string);
+  console.log('getStaticProps');
+  console.dir(context.params, { depth: null });
+  const server = await getServer(context.params.id[0] as string);
 
   return {
     props: { server }, // will be passed to the page component as props
@@ -51,13 +55,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (server.voteCount > 0)
       return {
         params: {
-          id: server.id.toString(),
+          id: [server.id.toString(), slugify(server.title)],
         },
       };
     return null;
   });
 
   paths = paths.filter((server) => server !== null);
+
+  console.dir(paths, { depth: null });
 
   return {
     paths,
