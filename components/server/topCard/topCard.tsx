@@ -32,7 +32,7 @@ const TopCard = ({
         />
         <div className="col-span-6 px-4 py-2">
           <Title level={3}>
-            <Link href={`/server/${id}`}>{title}</Link>
+            <Link href={`/server/${id}/${slugify(title)}`}>{title}</Link>
           </Title>
           <div className="py-1">
             {tags &&
@@ -49,7 +49,7 @@ const TopCard = ({
             faded
             className="h-full w-full"
             onClick={() => {
-              router.push(`/server/${id}`);
+              router.push(`/server/${id}/${slugify(title)}`);
             }}
           >
             <Icon size="large">
