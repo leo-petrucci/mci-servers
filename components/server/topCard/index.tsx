@@ -1,1 +1,1 @@
-export { default } from './serverCard';
+export { default } from './topCard';
