@@ -98,7 +98,7 @@ export const useServers = (
 export const useServer = (
   id: string
 ): QueryObserverResult<ServerObjectInterface, unknown> =>
-  useQuery('server', async () => {
+  useQuery(['server', id], async () => {
     const server = await getServer(id);
     return server;
   });
