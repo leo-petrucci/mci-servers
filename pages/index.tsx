@@ -1,8 +1,8 @@
 import React from 'react';
-import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
 import useLastMonth from 'utils/hooks/getLastMonth';
+import TopCard from 'components/server/topCard/topCard';
 import { useServers } from '../utils/hooks/data';
 
 const { Title } = Typography;
@@ -23,7 +23,11 @@ const Home = (): JSX.Element => {
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>Il top server di {lastMonthName}</Title>
         </div>
-        {isFetching ? 'Loading...' : <ServerCard server={lastmonthData[0]} />}
+        {lastmonthIsFetching ? (
+          'Loading...'
+        ) : (
+          <TopCard server={lastmonthData[0]} />
+        )}
         <div className="mb-4">
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>I nostri server più poplari</Title>
