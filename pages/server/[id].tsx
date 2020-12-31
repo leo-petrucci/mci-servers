@@ -16,7 +16,7 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id[0]);
+  const { data, isFetching } = useServer(router.query.id);
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
