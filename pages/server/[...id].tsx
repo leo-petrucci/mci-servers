@@ -20,7 +20,7 @@ const ServerPage = ({
 
   console.log('page');
   console.dir(router.query, { depth: null });
-  const { data, isFetching } = useServer(router.query.id[0]);
+  const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
