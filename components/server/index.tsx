@@ -1,4 +1,5 @@
 import React from 'react';
+import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/data';
 import Tag from 'components/tag';
@@ -26,7 +27,9 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             id={author.id}
             username={author.username}
             photoUrl={author.photoUrl}
-            subtitle={createdAt}
+            subtitle={DateTime.fromISO(createdAt).toLocaleString(
+              DateTime.DATE_FULL
+            )}
           />
         </div>
         {/* Tags Container */}

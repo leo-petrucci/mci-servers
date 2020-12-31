@@ -1,22 +1,32 @@
 import React from 'react';
+import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
-import Overlay from 'components/server/overlay';
+import useLastMonth from 'utils/hooks/getLastMonth';
 import { useServers } from '../utils/hooks/data';
 
 const { Title } = Typography;
 
-const { open } = Overlay;
-
 const Home = (): JSX.Element => {
   const { data, isFetching } = useServers();
+  const { lastMonthIso, lastMonthName } = useLastMonth();
+  const { data: lastmonthData, isFetching: lastmonthIsFetching } = useServers(
+    lastMonthIso,
+    'topServers'
+  );
+
   return (
     <div className="grid grid-cols-12 gap-4">
       <aside className="col-span-2 p-4">Sidebar</aside>
       <div className="col-span-10 p-4">
         <div className="mb-4">
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
-          <Title level={2}>{"I nostri server piu' poplari"}</Title>
+          <Title level={2}>Il top server di {lastMonthName}</Title>
+          {isFetching ? 'Loading...' : <ServerCard server={lastmonthData[0]} />}
+        </div>
+        <div className="mb-4">
+          {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
+          <Title level={2}>I nostri server più poplari</Title>
         </div>
         {isFetching ? (
           'Loading...'
