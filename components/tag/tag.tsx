@@ -7,7 +7,7 @@ interface TagPropsInterface {
 }
 
 const Tag = ({ children, onClick }: TagPropsInterface): JSX.Element => (
-  <Button className="mr-2" faded size="xsmall" onClick={onClick}>
+  <Button className="mr-2 mb-2" faded size="xsmall" onClick={onClick}>
     {children}
   </Button>
 );
