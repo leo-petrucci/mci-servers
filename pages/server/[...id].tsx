@@ -2,6 +2,7 @@ import React from 'react';
 import request, { gql } from 'graphql-request';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
+import slugify from 'slugify';
 import { endpoint } from '../_app';
 import Server from '../../components/server';
 import {
@@ -16,10 +17,11 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id as string);
+  const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
+  return null;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -31,12 +33,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { feed } = await request(
+  const { feed }: { feed: ServerObjectInterface[] } = await request(
     endpoint,
     gql`
       query {
         feed {
           id
+          title
           voteCount
         }
       }
@@ -44,7 +47,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   );
 
   let paths = feed.map((server) => {
-    if (server.voteCount > 0) return { params: { id: server.id.toString() } };
+    if (server.voteCount > 0)
+      return {
+        params: {
+          id: [server.id.toString(), slugify(server.title)],
+        },
+      };
     return null;
   });
 

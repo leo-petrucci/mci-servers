@@ -15,7 +15,6 @@ const Vote = ({ voteCount, serverId }: VotePropsInterface): JSX.Element => {
   return (
     <div className="flex flex-col">
       <Button
-        faded
         className="h-full w-full py-1"
         onClick={() => {
           handleVote();

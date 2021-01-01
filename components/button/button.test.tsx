@@ -52,13 +52,6 @@ test('button renders correctly with suffix', () => {
   expect(screen.getByTestId('button-suffix')).toBeInTheDocument();
 });
 
-test('alt button renders with correct classes', () => {
-  const { container } = setup({
-    faded: true,
-  });
-  expect(container.firstChild).toHaveClass('bg-emerald-50');
-});
-
 test('renders different sizes correctly', () => {
   const { container } = setup({
     size: 'small',

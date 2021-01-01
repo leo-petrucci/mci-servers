@@ -5,8 +5,7 @@ export interface ButtonPropsInterface {
   children?: React.ReactNode;
   onClick?: () => void;
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
-  type?: 'primary' | 'secondary';
-  faded?: boolean;
+  type?: 'primary' | 'secondary' | 'link';
   circle?: boolean;
   disabled?: boolean;
   prefix?: React.ReactNode;
@@ -28,7 +27,6 @@ const Button = ({
   htmlType,
   disabled,
   circle,
-  faded,
   prefix,
   suffix,
   className,
@@ -71,22 +69,13 @@ const Button = ({
     switch (type) {
       default:
       case 'primary':
-        return 'border-none';
-      case 'secondary':
-        return 'bg-opacity-0 border hover:bg-opacity-0 text-gray-400 hover:text-blue-600 hover:border-blue-600';
-    }
-  };
-
-  const fadedFunc = () => {
-    switch (faded) {
-      default:
-      case true:
         return `bg-emerald-50 border-gray-300 hover:border-emerald-500 ${
           !disabled ? 'hover:bg-emerald-100' : ''
         }	text-green-600 focus:outline-none focus:ring-2 focus:ring-green-100`;
-      case false:
-        return `bg-blue-600 ${!disabled ? 'hover:bg-emerald-500' : ''}
-          text-white focus:outline-none focus:ring-2 focus:ring-green-100`;
+      case 'secondary':
+        return 'bg-opacity-0 border hover:bg-opacity-0 text-gray-400 hover:text-green-600 hover:border-green-600';
+      case 'link':
+        return 'text-green-600 hover:text-green-500';
     }
   };
 
@@ -109,7 +98,7 @@ const Button = ({
       className={`${
         // eslint-disable-next-line no-unneeded-ternary
         className ? className : ''
-      } ${sizeFunc()} ${fadedFunc()} ${typeFunc()} ${circleFunc()} ${
+      } ${sizeFunc()} ${typeFunc()} ${circleFunc()} ${
         disabled ? 'disabled:opacity-50 cursor-not-allowed' : ''
       } font-medium transition`}
       disabled={disabled}
@@ -149,7 +138,6 @@ Button.defaultProps = {
   htmlType: 'button',
   size: 'medium',
   type: 'primary',
-  faded: false,
   circle: false,
   disabled: false,
   prefix: null,

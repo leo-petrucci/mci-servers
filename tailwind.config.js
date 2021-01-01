@@ -9,6 +9,10 @@ module.exports = {
     extend: {
       colors: {
         emerald: colors.emerald,
+        gray: colors.gray,
+        yellow: colors.yellow,
+        green: colors.green,
+        amber: colors.amber,
       },
     },
   },

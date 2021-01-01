@@ -29,7 +29,7 @@ const Author = ({
       <div className="flex flex-col justify-center ml-2">
         <Title level={5}>{username}</Title>
         {subtitle && (
-          <Text type="secondary" className="text-xs">
+          <Text type="secondary" className="text-xs whitespace-nowrap">
             {subtitle}
           </Text>
         )}

@@ -101,7 +101,7 @@ const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
                   >
                     Cancel
                   </Button>
-                  <Button size="small" faded ariaLabel="Confirm" onClick={onOk}>
+                  <Button size="small" ariaLabel="Confirm" onClick={onOk}>
                     Confirm
                   </Button>
                 </div>

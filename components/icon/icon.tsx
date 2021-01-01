@@ -4,9 +4,14 @@ import Spinner from './spinner';
 interface IconPropsInterface {
   children: React.ReactNode;
   size?: 'small' | 'medium' | 'large';
+  className?: string;
 }
 
-const Icon = ({ children, size }: IconPropsInterface): JSX.Element => {
+const Icon = ({
+  children,
+  size,
+  className,
+}: IconPropsInterface): JSX.Element => {
   const sizeFunc = () => {
     switch (size) {
       case 'small':
@@ -26,7 +31,7 @@ const Icon = ({ children, size }: IconPropsInterface): JSX.Element => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
-      className="inline"
+      className={`inline ${className}`}
     >
       {children}
     </svg>
@@ -35,6 +40,7 @@ const Icon = ({ children, size }: IconPropsInterface): JSX.Element => {
 
 Icon.defaultProps = {
   size: 'medium',
+  className: '',
 };
 
 Icon.Spinner = Spinner;

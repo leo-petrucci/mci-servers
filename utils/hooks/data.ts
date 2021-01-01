@@ -87,9 +87,10 @@ export async function getServers(
 }
 
 export const useServers = (
-  date?: string
+  date?: string,
+  key = 'servers'
 ): QueryObserverResult<ServerObjectInterface[], unknown> =>
-  useQuery('servers', async () => {
+  useQuery(key, async () => {
     const servers = await getServers(date);
     return servers;
   });
@@ -97,7 +98,7 @@ export const useServers = (
 export const useServer = (
   id: string
 ): QueryObserverResult<ServerObjectInterface, unknown> =>
-  useQuery('server', async () => {
+  useQuery(['server', id], async () => {
     const server = await getServer(id);
     return server;
   });
