@@ -13,11 +13,20 @@ interface ServerInterface {
 }
 
 const Server = ({ server }: ServerInterface): JSX.Element => {
-  const { title, content, tags, voteCount, id, author, createdAt } = server;
+  const {
+    title,
+    content,
+    tags,
+    voteCount,
+    id,
+    author,
+    createdAt,
+    cover,
+  } = server;
   return (
     <div className="grid grid-cols-12 gap-4">
       {/* Sidebar */}
-      <aside className="col-span-2 p-4">
+      <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-200">
         {/* Profile Container */}
         <div className="mb-4">
           <div className="mb-2">
@@ -45,12 +54,25 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             ))}
         </div>
       </aside>
-      <div className="col-span-1 py-4 pl-4">
+      <div className="col-span-1 py-4">
         <Vote voteCount={voteCount} serverId={id} />
       </div>
-      <main className="col-span-9 pr-4 py-4">
-        <div className="mb-2">
-          <Title level={1}>{title && title}</Title>
+      <main className="col-span-8 pr-4 py-4">
+        <div
+          className="mb-4 h-64 w-full bg-cover bg-center rounded-md overflow-hidden"
+          style={{ backgroundImage: `url(${cover})` }}
+        >
+          <div
+            className="h-full w-full flex items-end p-4"
+            style={{
+              background:
+                'linear-gradient(0deg, rgba(2,0,36,.5) 0%, rgba(0,0,0,0) 50%)',
+            }}
+          >
+            <Title level={1} className="text-white">
+              {title && title}
+            </Title>
+          </div>
         </div>
         <div className="mb-4">
           <div className="mb-2">
