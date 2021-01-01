@@ -5,6 +5,7 @@ import { ServerObjectInterface } from 'utils/hooks/data';
 import Tag from 'components/tag';
 import Author from 'components/author';
 import Vote from './vote';
+import Status from './status';
 
 const { Title } = Typography;
 
@@ -18,6 +19,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     content,
     tags,
     voteCount,
+    slots,
     id,
     author,
     createdAt,
@@ -26,7 +28,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
   return (
     <div className="grid grid-cols-12 gap-4">
       {/* Sidebar */}
-      <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-200">
+      <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
         {/* Profile Container */}
         <div className="mb-4">
           <div className="mb-2">
@@ -52,6 +54,14 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
                 {tag.tagName}
               </Tag>
             ))}
+        </div>
+        {/* Status Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>Status</Title>
+          </div>
+          {/* eslint-disable-next-line react/jsx-boolean-value */}
+          <Status slots={slots} online={true} />
         </div>
       </aside>
       <div className="col-span-1 py-4">
