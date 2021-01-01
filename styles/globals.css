@@ -31,6 +31,13 @@ a {
   box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  @apply text-gray-900;
+}
+
 .text-strong {
   @apply font-bold;
 }

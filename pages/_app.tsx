@@ -22,7 +22,7 @@ export default function MciServers({
     <QueryClientProvider client={queryClient}>
       <div className="m-auto" style={{ maxWidth: '1440px' }}>
         <div className="grid grid-cols-12">
-          <div className="col-span-12">
+          <div className="col-span-12 flex justify-center">
             <Top />
           </div>
           <main className="col-span-12">

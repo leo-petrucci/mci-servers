@@ -7,7 +7,7 @@ export interface ServerObjectInterface {
   title: string;
   content: string;
   createdAt: string;
-  slots: number;
+  slots: string;
   cover: string;
   voteCount: number;
   canVote: boolean;
