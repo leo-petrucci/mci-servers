@@ -3,8 +3,8 @@ import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/data';
 import Tag from 'components/tag';
-import Vote from './vote';
 import Author from 'components/author';
+import Vote from './vote';
 
 const { Title } = Typography;
 

@@ -44,7 +44,6 @@ const ServerCard = ({
         </div>
         <div className="col-span-1">
           <Button
-            faded
             className="h-full w-full"
             onClick={() => {
               router.push(`/server/${id}/${slugify(title)}`);
