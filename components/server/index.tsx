@@ -24,6 +24,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     author,
     createdAt,
     cover,
+    canVote,
   } = server;
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -65,7 +66,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
         </div>
       </aside>
       <div className="col-span-1 py-4">
-        <Vote voteCount={voteCount} serverId={id} />
+        <Vote voteCount={voteCount} serverId={id} canVote={canVote} />
       </div>
       <main className="col-span-8 pr-4 py-4">
         <div

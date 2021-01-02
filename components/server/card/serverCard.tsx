@@ -17,12 +17,12 @@ const ServerCard = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { id, title, voteCount, cover, content, tags } = server;
+  const { id, title, voteCount, cover, content, tags, canVote } = server;
   return (
     <>
       <article className="grid grid-cols-12 mb-4 p-2">
         <div className="col-span-1 mr-4">
-          <Vote voteCount={voteCount} serverId={id} />
+          <Vote voteCount={voteCount} serverId={id} canVote={canVote} />
         </div>
         <div
           style={{ backgroundImage: `url(${cover})` }}
