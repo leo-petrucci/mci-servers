@@ -69,9 +69,11 @@ const Button = ({
     switch (type) {
       default:
       case 'primary':
-        return `bg-emerald-50 border-gray-300 hover:border-emerald-500 ${
-          !disabled ? 'hover:bg-emerald-100' : ''
-        }	text-green-600 focus:outline-none focus:ring-2 focus:ring-green-100`;
+        return `${
+          !disabled
+            ? 'bg-emerald-50 hover:bg-emerald-100 text-green-600'
+            : 'bg-gray-100 text-gray-600'
+        }	focus:outline-none focus:ring-2 focus:ring-green-100`;
       case 'secondary':
         return 'bg-opacity-0 border hover:bg-opacity-0 text-gray-400 hover:text-green-600 hover:border-green-600';
       case 'link':
