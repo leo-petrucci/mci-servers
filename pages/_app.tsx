@@ -6,6 +6,7 @@ import type { AppProps } from 'next/app';
 import Top from 'components/navigation/top';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
+import { Toaster } from 'react-hot-toast';
 
 const endpoint = 'https://api.minecraftitalia.net';
 
@@ -31,6 +32,9 @@ export default function MciServers({
   if (router.pathname.includes('/redirect'))
     return (
       <QueryClientProvider client={queryClient}>
+        <div>
+          <Toaster />
+        </div>
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
         <Component {...pageProps} />
       </QueryClientProvider>
@@ -38,6 +42,9 @@ export default function MciServers({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div>
+        <Toaster />
+      </div>
       <div className="m-auto" style={{ maxWidth: '1440px' }}>
         <div className="grid grid-cols-12">
           <div className="col-span-12 flex justify-center">

@@ -1,6 +1,8 @@
 import Button from 'components/button';
 import Icon from 'components/icon';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useVote } from 'utils/hooks/useVote';
 
 interface VotePropsInterface {
   voteCount: number;
@@ -13,8 +15,25 @@ const Vote = ({
   serverId,
   canVote,
 }: VotePropsInterface): JSX.Element => {
+  const mutation = useVote(serverId);
+  const [votes, setVotes] = useState(voteCount);
+  const [canVoteState, setCanVoteState] = useState(canVote);
+
+  useEffect(() => {
+    setCanVoteState(canVote);
+  }, [canVote]);
+
   const handleVote = () => {
-    console.log('test');
+    const voteId = toast.loading('Votando...');
+    mutation.mutate(null, {
+      onSuccess: () => {
+        toast.success('Voto aggiunto!', {
+          id: voteId,
+        });
+        setVotes(votes + 1);
+        setCanVoteState(false);
+      },
+    });
   };
 
   return (
@@ -24,7 +43,7 @@ const Vote = ({
         onClick={() => {
           handleVote();
         }}
-        disabled={!canVote}
+        disabled={!canVoteState}
       >
         <Icon size="large">
           <path
@@ -34,7 +53,7 @@ const Vote = ({
           />
         </Icon>
       </Button>
-      <div className="text-center py-1 text-gray-600">{voteCount}</div>
+      <div className="text-center py-1 text-gray-600">{votes}</div>
     </div>
   );
 };
