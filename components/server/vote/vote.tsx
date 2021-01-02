@@ -1,6 +1,7 @@
 import Button from 'components/button';
 import Icon from 'components/icon';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useVote } from 'utils/hooks/useVote';
 
 interface VotePropsInterface {
@@ -23,8 +24,12 @@ const Vote = ({
   }, [canVote]);
 
   const handleVote = () => {
+    const voteId = toast.loading('Votando...');
     mutation.mutate(null, {
       onSuccess: () => {
+        toast.success('Voto aggiunto!', {
+          id: voteId,
+        });
         setVotes(votes + 1);
         setCanVoteState(false);
       },
