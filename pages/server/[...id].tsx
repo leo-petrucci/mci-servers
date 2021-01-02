@@ -3,13 +3,13 @@ import request, { gql } from 'graphql-request';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
-import { endpoint } from '../_app';
 import Server from '../../components/server';
 import {
   getServer,
   ServerObjectInterface,
   useServer,
 } from '../../utils/hooks/data';
+import { graphQLClient } from 'pages/_app';
 
 const ServerPage = ({
   server,
@@ -21,7 +21,6 @@ const ServerPage = ({
   if (server) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
-  return null;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -33,8 +32,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { feed }: { feed: ServerObjectInterface[] } = await request(
-    endpoint,
+  const {
+    feed,
+  }: { feed: ServerObjectInterface[] } = await graphQLClient.request(
     gql`
       query {
         feed {

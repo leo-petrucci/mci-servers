@@ -1,6 +1,6 @@
 import request, { gql } from 'graphql-request';
 import { QueryObserverResult, useQuery } from 'react-query';
-import { endpoint } from '../../pages/_app';
+import { endpoint, graphQLClient } from '../../pages/_app';
 
 export interface ServerObjectInterface {
   id: number;
@@ -27,8 +27,7 @@ interface AuthorInterface {
 }
 
 export async function getServer(id: string): Promise<ServerObjectInterface> {
-  const { server } = await request(
-    endpoint,
+  const { server } = await graphQLClient.request(
     gql`
         query {
           server(id: ${id}) {
@@ -58,8 +57,7 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
 export async function getServers(
   date?: string
 ): Promise<ServerObjectInterface[]> {
-  const { feed } = await request(
-    endpoint,
+  const { feed } = await graphQLClient.request(
     gql`
       query {
         feed ${date ? `(date: "${date}")` : ''} {

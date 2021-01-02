@@ -4,8 +4,16 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import type { AppProps } from 'next/app';
 
 import Top from 'components/navigation/top';
+import { GraphQLClient } from 'graphql-request';
+import { useRouter } from 'next/router';
 
-export const endpoint = 'https://api.minecraftitalia.net';
+const endpoint = 'https://api.minecraftitalia.net';
+
+export const graphQLClient = new GraphQLClient(endpoint, {
+  credentials: 'include',
+  mode: 'cors',
+});
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -18,6 +26,16 @@ export default function MciServers({
   Component,
   pageProps,
 }: AppProps): JSX.Element {
+  const router = useRouter();
+
+  if (router.pathname.includes('/redirect'))
+    return (
+      <QueryClientProvider client={queryClient}>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <Component {...pageProps} />
+      </QueryClientProvider>
+    );
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="m-auto" style={{ maxWidth: '1440px' }}>
