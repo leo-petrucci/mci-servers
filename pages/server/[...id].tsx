@@ -1,9 +1,9 @@
 import React from 'react';
-import request, { gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
-import { endpoint } from '../_app';
+import { graphQLClient } from 'pages/_app';
 import Server from '../../components/server';
 import {
   getServer,
@@ -18,10 +18,9 @@ const ServerPage = ({
 }): JSX.Element => {
   const router = useRouter();
   const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
-  if (server) return <Server server={server} />;
+  if (server && !data) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
-  return null;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
@@ -33,8 +32,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { feed }: { feed: ServerObjectInterface[] } = await request(
-    endpoint,
+  const {
+    feed,
+  }: { feed: ServerObjectInterface[] } = await graphQLClient.request(
     gql`
       query {
         feed {

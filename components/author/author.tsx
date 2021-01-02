@@ -8,6 +8,7 @@ interface AuthorPropsInterface {
   username: string;
   photoUrl: string;
   subtitle?: string;
+  photoSize?: 'normal' | 'small';
 }
 
 const Author = ({
@@ -15,31 +16,45 @@ const Author = ({
   username,
   photoUrl,
   subtitle,
-}: AuthorPropsInterface): JSX.Element => (
-  <>
-    <div className="flex">
-      <div
-        style={{
-          backgroundImage: `url(${photoUrl})`,
-          minWidth: '2.5rem',
-          minHeight: '2.5rem',
-        }}
-        className="bg-cover bg-center rounded-full"
-      />
-      <div className="flex flex-col justify-center ml-2">
-        <Title level={5}>{username}</Title>
-        {subtitle && (
-          <Text type="secondary" className="text-xs whitespace-nowrap">
-            {subtitle}
-          </Text>
-        )}
+  photoSize,
+}: AuthorPropsInterface): JSX.Element => {
+  const sizeFunc = () => {
+    switch (photoSize) {
+      default:
+      case 'normal':
+        return '2.5rem';
+      case 'small':
+        return '2rem';
+    }
+  };
+
+  return (
+    <>
+      <div className="flex">
+        <div
+          style={{
+            backgroundImage: `url(${photoUrl})`,
+            minWidth: sizeFunc(),
+            minHeight: sizeFunc(),
+          }}
+          className="bg-cover bg-center rounded-full"
+        />
+        <div className="flex flex-col justify-center ml-2">
+          <Title level={5}>{username}</Title>
+          {subtitle && (
+            <Text type="secondary" className="text-xs whitespace-nowrap">
+              {subtitle}
+            </Text>
+          )}
+        </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 Author.defaultProps = {
   id: null,
+  photoSize: 'normal',
   subtitle: '',
 };
 

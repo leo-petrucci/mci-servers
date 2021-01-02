@@ -5,9 +5,14 @@ import React from 'react';
 interface VotePropsInterface {
   voteCount: number;
   serverId: number;
+  canVote: boolean;
 }
 
-const Vote = ({ voteCount, serverId }: VotePropsInterface): JSX.Element => {
+const Vote = ({
+  voteCount,
+  serverId,
+  canVote,
+}: VotePropsInterface): JSX.Element => {
   const handleVote = () => {
     console.log('test');
   };
@@ -19,6 +24,7 @@ const Vote = ({ voteCount, serverId }: VotePropsInterface): JSX.Element => {
         onClick={() => {
           handleVote();
         }}
+        disabled={!canVote}
       >
         <Icon size="large">
           <path
