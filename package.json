@@ -22,6 +22,7 @@
     "react-dom": "17.0.1",
     "react-hot-toast": "^1.0.1",
     "react-query": "^3.5.6",
+    "react-select-search": "^2.2.4",
     "react-spring": "^9.0.0-rc.3",
     "slugify": "^1.4.6",
     "tailwindcss": "^2.0.1",
