@@ -1,1 +1,1 @@
-export { default } from './redirect.tsx';
+export { default } from './redirect';

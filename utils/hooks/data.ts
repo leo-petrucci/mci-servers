@@ -1,6 +1,6 @@
-import request, { gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import { QueryObserverResult, useQuery } from 'react-query';
-import { endpoint, graphQLClient } from '../../pages/_app';
+import { graphQLClient } from '../../pages/_app';
 
 export interface ServerObjectInterface {
   id: number;
