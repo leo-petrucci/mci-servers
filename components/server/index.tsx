@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/data';
 import Tag from 'components/tag';
 import Author from 'components/author';
+import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from './vote';
 import Status from './status';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface ServerInterface {
   server: ServerObjectInterface;
@@ -25,7 +26,22 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     createdAt,
     cover,
     canVote,
+    version,
+    ip,
   } = server;
+
+  const [info, setInfo] = useState({
+    players: { online: 0, max: slots },
+    online: true,
+  } as ServerInfoInterface);
+
+  const { data, status } = useInfo(id, ip);
+
+  useEffect(() => {
+    if (status === 'success') {
+      setInfo(data);
+    }
+  }, [status, data]);
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -57,13 +73,43 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
               </Tag>
             ))}
         </div>
+        {/* Version Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>Version</Title>
+          </div>
+          <Tag key={version.id} onClick={() => console.log('shit')}>
+            {version.versionName}
+          </Tag>
+        </div>
         {/* Status Container */}
         <div className="mb-4">
           <div className="mb-2">
             <Title level={5}>Status</Title>
           </div>
           {/* eslint-disable-next-line react/jsx-boolean-value */}
-          <Status slots={slots} online={true} />
+          <Status
+            slots={`${info.players.online}/${info.players.max}`}
+            online={info.online}
+          />
+        </div>
+        {/* Ip Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>Ip</Title>
+          </div>
+          {/* eslint-disable-next-line react/jsx-boolean-value */}
+          <Text type="secondary">{ip}</Text>
+        </div>
+        {/* MOTD Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>MOTD</Title>
+          </div>
+          {/* eslint-disable-next-line react/jsx-boolean-value */}
+          {info.motd?.clean.map((motd) => (
+            <Text type="secondary">{motd}</Text>
+          ))}
         </div>
       </aside>
       <div className="col-span-1 py-4">

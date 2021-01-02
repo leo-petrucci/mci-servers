@@ -5,14 +5,16 @@ import { graphQLClient } from '../../pages/_app';
 export interface ServerObjectInterface {
   id: number;
   title: string;
+  ip: string;
   content: string;
   createdAt: string;
-  slots: string;
+  slots: number;
   cover: string;
   voteCount: number;
   canVote: boolean;
   tags: TagInterface[];
   author: AuthorInterface;
+  version: VersionInterface;
 }
 
 interface TagInterface {
@@ -26,6 +28,11 @@ interface AuthorInterface {
   photoUrl: string;
 }
 
+interface VersionInterface {
+  id: number;
+  versionName: string;
+}
+
 export async function getServer(id: string): Promise<ServerObjectInterface> {
   const { server } = await graphQLClient.request(
     gql`
@@ -33,6 +40,7 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
           server(id: ${id}) {
             id
             title
+            ip
             content
             createdAt
             slots
@@ -43,6 +51,10 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
               id
               photoUrl
               username
+            }
+            version {
+              id
+              versionName
             }
             tags {
               id
@@ -63,6 +75,7 @@ export async function getServers(
         feed ${date ? `(date: "${date}")` : ''} {
           id
           title
+          ip
           createdAt
           voteCount
           canVote
@@ -72,6 +85,10 @@ export async function getServers(
             id
             username
             photoUrl
+          }
+          version {
+            id
+            versionName
           }
           tags {
             id
