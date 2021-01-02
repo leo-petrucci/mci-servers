@@ -27,7 +27,6 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     canVote,
   } = server;
 
-  console.log('Server', title, 'canvote', canVote);
   return (
     <div className="grid grid-cols-12 gap-4">
       {/* Sidebar */}

@@ -6,8 +6,8 @@ import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
-import Vote from '../vote';
 import slugify from 'slugify';
+import Vote from '../vote';
 
 const { Paragraph, Title } = Typography;
 
