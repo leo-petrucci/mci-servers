@@ -17,8 +17,6 @@ const Vote = ({
     console.log('test');
   };
 
-  console.log('Server', serverId, 'canvote', canVote);
-
   return (
     <div className="flex flex-col">
       <Button
