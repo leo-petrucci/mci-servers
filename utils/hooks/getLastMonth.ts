@@ -16,7 +16,8 @@ const useLastMonth = (): UseLastMonthInterface => {
 
   const lastMonthIso = DateTime.fromISO(x.toISOString()).toUTC().toString();
 
-  const lastMonthName = DateTime.local().setLocale('it').monthLong;
+  const lastMonthName = DateTime.fromISO(x.toISOString()).setLocale('it')
+    .monthLong;
 
   return { lastMonthIso, lastMonthName };
 };
