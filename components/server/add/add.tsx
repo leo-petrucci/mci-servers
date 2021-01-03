@@ -4,10 +4,10 @@ import Input from 'components/forms/input';
 
 const layout = {
   labelCol: {
-    span: 12,
+    span: 10,
   },
   wrapperCol: {
-    span: 12,
+    span: 10,
   },
 };
 
