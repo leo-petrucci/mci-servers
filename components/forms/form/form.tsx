@@ -41,7 +41,9 @@ const Form: React.FC<Form> & {
   Item: (props: ItemPropsInterface) => JSX.Element;
 } = ({ children, form, onSubmit, labelCol, wrapperCol }: Form) => {
   const defaultForm = useForm();
-  const thisForm = useRef<HTMLFormElement>(document.createElement('form'));
+  const thisForm = useRef<HTMLFormElement>(
+    typeof window !== 'undefined' && document.createElement('form')
+  );
 
   useEffect(
     () => {
