@@ -4,6 +4,7 @@ import Input from 'components/forms/input';
 import Button from 'components/button';
 
 import dynamic from 'next/dynamic';
+import MultipleSelect from 'components/forms/multipleSelect';
 
 const EditorComponent = dynamic(() => import('./editor'), { ssr: false });
 
@@ -79,6 +80,7 @@ const AddServer = (): JSX.Element => {
           >
             {isClient && <EditorComponent name="description" />}
           </Form.Item>
+          <MultipleSelect />
         </Form>
         <Button
           onClick={async () => {
