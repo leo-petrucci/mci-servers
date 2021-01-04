@@ -62,6 +62,7 @@ const Item = ({
         <Col
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...{ ...wrapperColForm, ...labelCol }}
+          className="flex flex-col"
         >
           {children}
 
