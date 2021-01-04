@@ -33,16 +33,20 @@ const AddServer = (): JSX.Element => {
       <main className="col-span-8 pr-4 py-4">
         <Form {...layout} form={form}>
           <Form.Item
-            label="Email"
-            name="emailAddress"
+            label="Nome del server"
+            name="title"
             rules={{
               required: {
                 value: true,
-                message: 'Email is required',
+                message: 'Devi aggiungere il nome del server.',
               },
-              pattern: {
-                value: /^[-!#$%&'*+/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z{|}~])*@[a-zA-Z](-?[a-zA-Z0-9])*(\.[a-zA-Z](-?[a-zA-Z0-9])*)+$/g,
-                message: 'Please input a valid email.',
+              minLength: {
+                value: 10,
+                message: 'Il titolo deve essere almeno 10 caratteri.',
+              },
+              maxLength: {
+                value: 200,
+                message: 'Il titolo deve essere meno di 200 caratteri.',
               },
             }}
           >
@@ -65,8 +69,11 @@ const AddServer = (): JSX.Element => {
               },
               minLength: {
                 value: 200,
-                message:
-                  'La descrizione deve essere lunga almeno 200 caratteri.',
+                message: 'La descrizione deve essere almeno 200 caratteri.',
+              },
+              maxLength: {
+                value: 10000,
+                message: 'La descrizione deve essere meno di 10000 caratteri.',
               },
             }}
           >
