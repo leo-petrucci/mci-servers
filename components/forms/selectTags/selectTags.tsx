@@ -112,6 +112,7 @@ const Dropdown = ({
     return () => {
       document.removeEventListener('mousedown', handler, false);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -127,7 +128,6 @@ const Dropdown = ({
                   className="text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   key={tagOption.id}
                   onClick={() => {
-                    console.log('test');
                     selectOption(tagOption.tagName);
                   }}
                 >
