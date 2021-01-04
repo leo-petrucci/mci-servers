@@ -54,8 +54,23 @@ const AddServer = (): JSX.Element => {
             />
           </Form.Item>
 
-          <Form.Item label="Descrizione" {...layout}>
-            {isClient && <EditorComponent control={form.control} />}
+          <Form.Item
+            name="description"
+            label="Descrizione"
+            {...layout}
+            rules={{
+              required: {
+                value: true,
+                message: 'Devi aggiungere una descrizione.',
+              },
+              minLength: {
+                value: 200,
+                message:
+                  'La descrizione deve essere lunga almeno 200 caratteri.',
+              },
+            }}
+          >
+            {isClient && <EditorComponent name="description" />}
           </Form.Item>
         </Form>
         <Button

@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/globals.css';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import '@uiw/react-markdown-preview/lib/esm/styles/markdown.css';
+import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import type { AppProps } from 'next/app';
 

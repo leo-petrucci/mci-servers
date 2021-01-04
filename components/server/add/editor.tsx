@@ -1,27 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import ReactMde from 'react-mde';
+import * as Showdown from 'showdown';
 import { Controller } from 'react-hook-form';
-import 'react-mde/lib/styles/css/react-mde-all.css';
+import { useFormData } from 'components/forms/form/form';
+import { useFormItemData } from 'components/forms/form/item';
+
+const converter = new Showdown.Converter({
+  tables: true,
+  simplifiedAutoLink: true,
+  strikethrough: true,
+  tasklists: true,
+});
 
 interface EditorComponentPropsInterface {
-  control: any;
+  name: string;
 }
 
 const EditorComponent = ({
-  control,
+  name,
 }: EditorComponentPropsInterface): JSX.Element => {
+  const { form } = useFormData();
+  const { rules } = useFormItemData();
   const [selectedTab, setSelectedTab] = React.useState<'write' | 'preview'>(
     'write'
   );
   return (
     <Controller
-      control={control}
-      name="test"
-      render={({ onChange }) => (
+      control={form.control}
+      name={name}
+      rules={rules}
+      render={({ onChange, value }) => (
         <ReactMde
+          value={value}
           onChange={onChange}
           selectedTab={selectedTab}
           onTabChange={setSelectedTab}
+          generateMarkdownPreview={(markdown) =>
+            Promise.resolve(converter.makeHtml(markdown))
+          }
         />
       )}
     />
