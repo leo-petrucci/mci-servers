@@ -4,7 +4,7 @@ import Input from 'components/forms/input';
 import Button from 'components/button';
 
 import dynamic from 'next/dynamic';
-import MultipleSelect from 'components/forms/multipleSelect';
+import MultipleSelect from 'components/forms/selectTags';
 
 const EditorComponent = dynamic(() => import('./editor'), { ssr: false });
 
@@ -18,7 +18,10 @@ const layout = {
 };
 
 const AddServer = (): JSX.Element => {
-  const form = Form.useForm({ criteriaMode: 'all' });
+  const form = Form.useForm({
+    criteriaMode: 'all',
+    defaultValues: { tags: [] },
+  });
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -51,12 +54,7 @@ const AddServer = (): JSX.Element => {
               },
             }}
           >
-            <Input
-              type="email"
-              placeholder="Email"
-              name="emailAddress"
-              autocomplete="email"
-            />
+            <Input type="text" placeholder="Nome del server" name="title" />
           </Form.Item>
 
           <Form.Item
@@ -80,12 +78,16 @@ const AddServer = (): JSX.Element => {
           >
             {isClient && <EditorComponent name="description" />}
           </Form.Item>
-          <MultipleSelect />
+
+          <Form.Item name="tags" label="Tags" {...layout}>
+            <MultipleSelect />
+          </Form.Item>
         </Form>
         <Button
           onClick={async () => {
             form.trigger().then((res) => {
-              if (res) console.log(form.getValues());
+              if (form.getValues().tags.length === 0)
+                if (res) console.log(form.getValues());
             });
           }}
         >
