@@ -24,6 +24,11 @@ const SelectTags = (): JSX.Element => {
     inputRef.current.value = '';
   };
 
+  const removeOption = (tagName: string) => {
+    const newArr = value.filter((item) => item !== tagName);
+    setValue(newArr);
+  };
+
   useEffect(() => {
     form.register('tags');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,11 +49,30 @@ const SelectTags = (): JSX.Element => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center shadow-sm transition border border-gray-200 rounded-md h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-300 ">
-        <div className="flex mx-3">
+      <div className="flex flex-col py-2 mb-2 justify-center shadow-sm transition border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-300 ">
+        <div className="flex flex-wrap mx-3">
           {value.map((tag) => (
-            <Button key={tag} className="mr-2" size="xsmall">
+            <Button
+              key={tag}
+              onClick={() => removeOption(tag)}
+              className="mr-2 mb-2 flex items-center"
+              size="xsmall"
+            >
               {tag}
+              <svg
+                className="ml-1"
+                height="14"
+                width="14"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
             </Button>
           ))}
           <input
@@ -56,8 +80,9 @@ const SelectTags = (): JSX.Element => {
             onChange={(e) => getOptions(e)}
             type="email"
             name="tags"
+            className="w-full"
             onFocus={() => setIsFocused(true)}
-            placeholder="Tags"
+            placeholder="Comincia a scrivere per cercare tags"
           />
         </div>
         {isFocused && (
