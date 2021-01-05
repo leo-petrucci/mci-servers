@@ -50,7 +50,7 @@ const Input: React.FC<Input> = ({
   return (
     <>
       <input
-        className={`shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-300 ${
+        className={`shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-400 ${
           form && form.errors[name] ? 'border-red-300' : ''
         }`}
         type={type}

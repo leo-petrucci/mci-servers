@@ -2,9 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Form from 'components/forms/form';
 import Input from 'components/forms/input';
 import Button from 'components/button';
+import Typography from 'components/typography';
 
 import dynamic from 'next/dynamic';
 import MultipleSelect from 'components/forms/selectTags';
+import Cover from 'components/forms/cover/cover';
+
+const { Text } = Typography;
 
 const EditorComponent = dynamic(() => import('./editor'), { ssr: false });
 
@@ -82,6 +86,31 @@ const AddServer = (): JSX.Element => {
           <Form.Item name="tags" label="Tags" {...layout}>
             <MultipleSelect />
           </Form.Item>
+
+          <Form.Item
+            name="cover"
+            label="Cover"
+            {...layout}
+            rules={{
+              required: {
+                value: true,
+                message: "Devi aggiungere un'immagine per il tuo server.",
+              },
+              pattern: {
+                value: /(https:)([/|.|\w|\s|-])*\.(?:jpg|png)/g,
+                message: "Il link non è un'immagine valida.",
+              },
+            }}
+          >
+            <Cover />
+          </Form.Item>
+          <div className="mb-2">
+            <Text type="secondary">
+              La cover è una immagine pubblicitaria per il tuo server. Verra
+              visualizzata sulla homepage e sulla pagina personale del tuo
+              server. Consigliamo dimensioni <strong>1125x400</strong>.
+            </Text>
+          </div>
         </Form>
         <Button
           onClick={async () => {

@@ -49,7 +49,7 @@ const SelectTags = (): JSX.Element => {
 
   return (
     <div>
-      <div className="flex flex-col py-2 mb-2 justify-center shadow-sm transition border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-300 ">
+      <div className="flex flex-col py-2 justify-center shadow-sm transition border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-300 ">
         <div className="flex flex-wrap mx-3">
           {value.map((tag) => (
             <Button

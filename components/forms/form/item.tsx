@@ -67,7 +67,12 @@ const Item = ({
           {children}
 
           {/* TODO: Animate these values entering and exiting with react spring */}
-          <span id="errors" role="alert" aria-atomic="true" className="text-sm">
+          <span
+            id="errors"
+            role="alert"
+            aria-atomic="true"
+            className="text-sm mt-1"
+          >
             <Text type="danger">
               {form && name && form.errors[name] && form.errors[name].message}
             </Text>
