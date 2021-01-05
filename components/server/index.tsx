@@ -35,7 +35,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     online: true,
   } as ServerInfoInterface);
 
-  const { data, status } = useInfo(id, ip);
+  const { data, status } = useInfo(ip);
 
   useEffect(() => {
     if (status === 'success') {

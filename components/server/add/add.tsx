@@ -6,7 +6,8 @@ import Typography from 'components/typography';
 
 import dynamic from 'next/dynamic';
 import MultipleSelect from 'components/forms/selectTags';
-import Cover from 'components/forms/cover/cover';
+import Cover from 'components/forms/cover';
+import Ip from 'components/forms/ip';
 
 const { Text } = Typography;
 
@@ -81,6 +82,20 @@ const AddServer = (): JSX.Element => {
             }}
           >
             {isClient && <EditorComponent name="description" />}
+          </Form.Item>
+
+          <Form.Item
+            name="ip"
+            label="Ip"
+            {...layout}
+            rules={{
+              required: {
+                value: true,
+                message: "Devi aggiungere un'immagine per il tuo server.",
+              },
+            }}
+          >
+            <Ip />
           </Form.Item>
 
           <Form.Item name="tags" label="Tags" {...layout}>

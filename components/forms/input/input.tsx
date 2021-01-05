@@ -5,9 +5,9 @@ import { useFormItemData } from '../form/item';
 export interface Input {
   name: string;
   placeholder?: string;
-  onChange?: () => unknown;
-  onFocus?: () => unknown;
-  onBlur?: () => unknown;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => any;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => any;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => any;
   type:
     | 'text'
     | 'date'

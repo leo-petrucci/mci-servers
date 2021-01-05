@@ -1,3 +1,4 @@
+import throttle from 'lodash.throttle';
 import { QueryObserverResult, useQuery } from 'react-query';
 
 export interface ServerInfoInterface {
@@ -11,20 +12,29 @@ export interface ServerInfoInterface {
   version: string;
   online: boolean;
   icon?: string;
+  hostname: string;
 }
 
 export async function getInfo(ip): Promise<ServerInfoInterface> {
   const data = await fetch(`https://api.mcsrvstat.us/2/${ip}`)
     .then((response) => response.json())
-    .then((json) => json);
+    .then((json) => json)
+    .catch((error) => console.log(error));
   return data;
 }
 
 export const useInfo = (
-  id: number,
-  ip: string
-): QueryObserverResult<ServerInfoInterface, unknown> =>
-  useQuery(['info', id], async () => {
-    const info = await getInfo(ip);
-    return info;
-  });
+  ip: string,
+  enabled = true
+): QueryObserverResult<ServerInfoInterface, unknown> => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const throttledSearch = throttle(getInfo, 400);
+  return useQuery(
+    ['info', ip],
+    async () => {
+      const info = await throttledSearch(ip);
+      return info;
+    },
+    { enabled }
+  );
+};
