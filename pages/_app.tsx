@@ -9,7 +9,7 @@ import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 
-const endpoint = `${process.env.NEXT_API_URL}`;
+const endpoint = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export const graphQLClient = new GraphQLClient(endpoint, {
   credentials: 'include',
