@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useTags from 'utils/hooks/useTags';
 import Button from 'components/button';
 import { useFormData } from '../form/form';
@@ -17,12 +17,15 @@ const SelectTags = (): JSX.Element => {
     // setTagOptions(searchTags);
   };
 
-  const selectOption = (tagName: string) => {
-    const newValue = [...value, tagName];
-    setValue(newValue);
-    setSearch('');
-    inputRef.current.value = '';
-  };
+  const selectOption = useCallback(
+    (tagName: string) => {
+      const newValue = [...value, tagName];
+      setValue(newValue);
+      setSearch('');
+      inputRef.current.value = '';
+    },
+    [value]
+  );
 
   const removeOption = (tagName: string) => {
     const newArr = value.filter((item) => item !== tagName);
@@ -62,7 +65,7 @@ const SelectTags = (): JSX.Element => {
       if (inputRef) input.removeEventListener('keyup', handleKeys);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectOption]);
 
   return (
     <div>
