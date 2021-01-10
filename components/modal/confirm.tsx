@@ -10,21 +10,21 @@ export interface ConfirmProps extends ModalFuncProps {
 }
 
 export default (configs: ConfirmProps): void => {
-  const portal = document.getElementById('staffscanner-portal');
-  let div: HTMLElement;
-  if (portal === null) {
-    div = document.createElement('div');
-    div.id = 'staffscanner-portal';
-    document.body.appendChild(div);
-  } else {
-    div = portal;
-  }
+  const div = document.createElement('div');
+  document.body.appendChild(div);
 
   let currentConfig = {
     ...configs,
     close,
     visible: true,
   } as DialogProps;
+
+  function destroy() {
+    const unmountResult = ReactDOM.unmountComponentAtNode(div);
+    if (unmountResult && div.parentNode) {
+      div.parentNode.removeChild(div);
+    }
+  }
 
   function render({ ...props }: DialogProps) {
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -35,6 +35,7 @@ export default (configs: ConfirmProps): void => {
     currentConfig = {
       ...currentConfig,
       visible: false,
+      afterClose: () => destroy(),
     };
     render(currentConfig);
   }

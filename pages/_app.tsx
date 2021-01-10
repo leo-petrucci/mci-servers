@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/globals.css';
+import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import type { AppProps } from 'next/app';
 
@@ -8,7 +9,7 @@ import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 
-const endpoint = 'https://api.minecraftitalia.net';
+const endpoint = `${process.env.NEXT_API_URL}`;
 
 export const graphQLClient = new GraphQLClient(endpoint, {
   credentials: 'include',

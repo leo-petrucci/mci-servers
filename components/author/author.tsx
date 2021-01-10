@@ -30,12 +30,12 @@ const Author = ({
 
   return (
     <>
-      <div className="flex">
+      <div className="flex items-center">
         <div
           style={{
             backgroundImage: `url(${photoUrl})`,
-            minWidth: sizeFunc(),
-            minHeight: sizeFunc(),
+            width: sizeFunc(),
+            height: sizeFunc(),
           }}
           className="bg-cover bg-center rounded-full"
         />

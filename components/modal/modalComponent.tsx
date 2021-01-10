@@ -1,16 +1,10 @@
 /* eslint-disable react/require-default-props */
 import React, { useEffect, useRef } from 'react';
-import {
-  animated,
-  useTransition,
-  config,
-  UseTransitionProps,
-} from 'react-spring';
-import Button from '../button';
+import { animated, useTransition, config } from 'react-spring';
+import Button from 'components/button';
 
 export interface ModalFuncProps {
-  animationProps?: UseTransitionProps;
-  className?: string;
+  afterClose?: () => void;
   title?: string;
   children?: React.ReactNode;
   visible?: boolean;
@@ -21,16 +15,7 @@ export interface ModalFuncProps {
 
 const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
   const bgRef = useRef<HTMLDivElement>(document.createElement('div'));
-  const {
-    children,
-    visible,
-    onCancel,
-    title,
-    onOk,
-    close,
-    className,
-    animationProps,
-  } = props;
+  const { children, visible, onCancel, title, onOk, close, afterClose } = props;
 
   useEffect(() => {
     const bg = bgRef.current;
@@ -47,7 +32,17 @@ const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
     };
   }, [close]);
 
-  const transition = useTransition(visible, animationProps);
+  const transition = useTransition(visible, {
+    from: { opacity: 0, transform: `translate(-50%, -50%) scale(0.75)` },
+    enter: { opacity: 1, transform: `translate(-50%, -50%) scale(1)` },
+    leave: { opacity: 0, transform: `translate(-50%, -50%) scale(0.75)` },
+    config: config.stiff,
+    onRest: () => {
+      if (!visible) {
+        afterClose?.();
+      }
+    },
+  });
 
   return (
     <>
@@ -58,7 +53,7 @@ const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
             <animated.div
               ref={bgRef}
               role="dialog"
-              className={`${className} fixed top-0 bottom-0 left-0 right-0 z-40 flex items-center bg-gray-900 bg-opacity-50 h-full justify-center origin-center`}
+              className="fixed top-0 bottom-0 left-0 right-0 z-40 flex items-center bg-gray-900 bg-opacity-50 h-full justify-center origin-center"
               onKeyDown={onCancel}
               style={{ opacity: style.opacity.to((o) => o) as never }}
             />
@@ -66,7 +61,10 @@ const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
               className="fixed z-50 flex items-center justify-center left-2/4 top-2/4"
               style={style as never}
             >
-              <div className="relative bg-white rounded-lg border-gray-400 border">
+              <div
+                className="relative bg-white rounded-lg border-gray-400 border"
+                style={{ width: '586px' }}
+              >
                 <div className="flex justify-center items-center h-12 text-black font-medium border-b border-gray-100">
                   <button
                     className="absolute right-3 border-none text-gray-600"
@@ -112,16 +110,6 @@ const ModalComponent: React.FC<ModalFuncProps> = (props: ModalFuncProps) => {
       )}
     </>
   );
-};
-
-ModalComponent.defaultProps = {
-  className: '',
-  animationProps: {
-    from: { opacity: 0, transform: `translate(-50%, -50%) scale(0.75)` },
-    enter: { opacity: 1, transform: `translate(-50%, -50%) scale(1)` },
-    leave: { opacity: 0, transform: `translate(-50%, -50%) scale(0.75)` },
-    config: config.stiff,
-  },
 };
 
 export default ModalComponent;

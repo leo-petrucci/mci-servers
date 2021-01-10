@@ -3,7 +3,7 @@ import Button from 'components/button';
 
 interface TagPropsInterface {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Tag = ({ children, onClick }: TagPropsInterface): JSX.Element => (
@@ -11,5 +11,9 @@ const Tag = ({ children, onClick }: TagPropsInterface): JSX.Element => (
     {children}
   </Button>
 );
+
+Tag.defaultProps = {
+  onClick: () => null,
+};
 
 export default Tag;
