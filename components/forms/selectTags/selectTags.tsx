@@ -9,7 +9,7 @@ const SelectTags = (): JSX.Element => {
   const [isFocused, setIsFocused] = useState(false);
   const [search, setSearch] = useState('');
   const { data, isFetching } = useTags(search);
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>();
 
   const getOptions = async (e) => {
     setSearch(e.target.value);
@@ -18,9 +18,9 @@ const SelectTags = (): JSX.Element => {
   };
 
   const selectOption = (tagName: string) => {
-    const newValue = Array.from(new Set([...value, tagName]));
+    const newValue = [...value, tagName];
     setValue(newValue);
-    // @ts-ignore
+    setSearch('');
     inputRef.current.value = '';
   };
 
@@ -46,6 +46,23 @@ const SelectTags = (): JSX.Element => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, form.errors]);
+
+  useEffect(() => {
+    const handleKeys = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        selectOption(inputRef.current.value);
+      }
+    };
+
+    const input = inputRef.current;
+
+    input.addEventListener('keyup', handleKeys);
+
+    return () => {
+      if (inputRef) input.removeEventListener('keyup', handleKeys);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>
