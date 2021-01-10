@@ -29,6 +29,7 @@ export default function MciServers({
   pageProps,
 }: AppProps): JSX.Element {
   const router = useRouter();
+  console.log('endpoint is', endpoint);
 
   if (router.pathname.includes('/redirect'))
     return (
