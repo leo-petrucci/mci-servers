@@ -9,7 +9,6 @@ const redirectUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL}`;
 const Auth = (): JSX.Element => {
   const router = useRouter();
   const { data, isFetching, isError } = useUser();
-  console.log('redirectUrl is', redirectUrl);
 
   if (isFetching) return <div>Loading...</div>;
 
