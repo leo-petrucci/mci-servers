@@ -1,5 +1,11 @@
 import { gql } from 'graphql-request';
-import { QueryObserverResult, useQuery } from 'react-query';
+import { StringValueNode } from 'graphql/language/ast';
+import {
+  QueryObserverResult,
+  useMutation,
+  UseMutationResult,
+  useQuery,
+} from 'react-query';
 import { graphQLClient } from '../../pages/_app';
 
 export interface ServerObjectInterface {
@@ -15,6 +21,14 @@ export interface ServerObjectInterface {
   tags: TagInterface[];
   author: AuthorInterface;
   version: VersionInterface;
+}
+
+export interface ServerPostInterface {
+  title: string;
+  content: string;
+  cover: string;
+  ip: string;
+  tags: string[];
 }
 
 interface TagInterface {
@@ -101,6 +115,32 @@ export async function getServers(
   return feed;
 }
 
+export async function postServer({
+  title,
+  content,
+  tags,
+  ip,
+  cover,
+}: ServerPostInterface): Promise<ServerObjectInterface> {
+  const { createServer } = await graphQLClient.request(
+    gql`
+      mutation {
+        createServer (
+          title: "${title}",
+          content: "${content}",
+          tags: ${JSON.stringify(tags)},
+          ip: "${ip}",
+          cover: "${cover}",
+        ) {
+          id
+          title
+        }
+      }
+    `
+  );
+  return createServer;
+}
+
 export const useServers = (
   date?: string,
   key = 'servers'
@@ -115,5 +155,11 @@ export const useServer = (
 ): QueryObserverResult<ServerObjectInterface, unknown> =>
   useQuery(['server', id], async () => {
     const server = await getServer(id);
+    return server;
+  });
+
+export const useCreateServer = (): UseMutationResult<ServerObjectInterface> =>
+  useMutation('addServer', async (body: ServerPostInterface) => {
+    const server = await postServer(body);
     return server;
   });

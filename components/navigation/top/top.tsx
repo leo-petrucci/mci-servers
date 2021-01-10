@@ -1,3 +1,4 @@
+import Button from 'components/button';
 import React from 'react';
 import Auth from '../auth/auth';
 
@@ -7,7 +8,12 @@ const Top = (): JSX.Element => (
     className="w-full flex justify-between items-center px-4 py-2 border-b border-gray-100 text-sm text-gray-500"
   >
     <div>Search</div>
-    <div>
+    <div className="flex">
+      <div className="mr-4">
+        <Button type="secondary" size="small">
+          Aggiungi server
+        </Button>
+      </div>
       <Auth />
     </div>
   </nav>

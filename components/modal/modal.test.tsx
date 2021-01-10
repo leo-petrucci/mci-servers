@@ -36,9 +36,9 @@ test('closes even if no functions are passed to it', async () => {
   fireEvent.click(open);
 
   await waitFor(() => {
-    const cancel = screen.getByLabelText('Cancel');
+    const cancel = screen.getAllByLabelText('Cancel')[0];
     fireEvent.click(cancel);
-    expect(screen.getByLabelText('Cancel')).toBeInTheDocument();
+    expect(cancel).toBeInTheDocument();
   });
 });
 
@@ -49,7 +49,7 @@ test('onSubmit callback is called correctly', async () => {
   fireEvent.click(open);
 
   await waitFor(() => {
-    const ok = screen.getByLabelText('Confirm');
+    const ok = screen.getAllByLabelText('Confirm')[0];
     fireEvent.click(ok);
     expect(onSubmit.mock.calls.length).toBe(1);
   });
@@ -62,7 +62,7 @@ test('onCancel callback is called correctly', async () => {
   fireEvent.click(open);
 
   await waitFor(() => {
-    const cancel = screen.getByLabelText('Cancel');
+    const cancel = screen.getAllByLabelText('Cancel')[0];
     fireEvent.click(cancel);
     expect(onCancel.mock.calls.length).toBe(1);
   });

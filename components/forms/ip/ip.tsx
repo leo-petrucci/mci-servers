@@ -2,9 +2,11 @@ import Icon from 'components/icon';
 import React, { useEffect, useState } from 'react';
 import { useInfo } from 'utils/hooks/useServerInfo';
 import { useFormData } from '../form/form';
+import { useFormItemData } from '../form/item';
 
 const Ip = (): JSX.Element => {
   const { form } = useFormData();
+  const { rules } = useFormItemData();
   const [ip, setIp] = useState('');
   const [enabled, setEnabled] = useState(false);
   const { data, isFetching } = useInfo(ip, enabled);
@@ -34,6 +36,7 @@ const Ip = (): JSX.Element => {
           onChange={onChange}
           type="text"
           name="ip"
+          ref={form && form.register(rules)}
           className="w-full"
           placeholder="L'ip del tuo server"
         />

@@ -8,6 +8,16 @@ import dynamic from 'next/dynamic';
 import MultipleSelect from 'components/forms/selectTags';
 import Cover from 'components/forms/cover';
 import Ip from 'components/forms/ip';
+import confirm from 'components/modal/confirm';
+import {
+  postServer,
+  ServerPostInterface,
+  useCreateServer,
+} from 'utils/hooks/data';
+import { useMutation } from 'react-query';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
+import slugify from 'slugify';
 
 const { Text } = Typography;
 
@@ -23,6 +33,7 @@ const layout = {
 };
 
 const AddServer = (): JSX.Element => {
+  const router = useRouter();
   const form = Form.useForm({
     criteriaMode: 'all',
     defaultValues: { tags: [] },
@@ -32,6 +43,27 @@ const AddServer = (): JSX.Element => {
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  const mutation = useCreateServer();
+
+  const onSubmit = (body: ServerPostInterface) => {
+    const serverToastId = toast.loading('Postando il tuo server...');
+    mutation.mutate(body, {
+      onError: () => {
+        toast.error("C'e' stato un problema nel postare il tuo server.", {
+          id: serverToastId,
+          duration: 5000,
+        });
+      },
+      onSuccess: (res) => {
+        toast.success("Il tuo server e' stato postato.", {
+          id: serverToastId,
+          duration: 5000,
+        });
+        router.push(`/server/${res.id}/${slugify(res.title)}`);
+      },
+    });
+  };
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -63,7 +95,7 @@ const AddServer = (): JSX.Element => {
           </Form.Item>
 
           <Form.Item
-            name="description"
+            name="content"
             label="Descrizione"
             {...layout}
             rules={{
@@ -81,7 +113,7 @@ const AddServer = (): JSX.Element => {
               },
             }}
           >
-            {isClient && <EditorComponent name="description" />}
+            {isClient && <EditorComponent name="content" />}
           </Form.Item>
 
           <Form.Item
@@ -130,12 +162,22 @@ const AddServer = (): JSX.Element => {
         <Button
           onClick={async () => {
             form.trigger().then((res) => {
-              if (form.getValues().tags.length === 0)
-                if (res) console.log(form.getValues());
+              if (res)
+                confirm({
+                  title: 'Are you sure you want to add this Organisation?',
+                  content:
+                    'Make sure you have thoroughly checked the information before submitting.',
+                  // eslint-disable-next-line no-console
+                  onOk: () => {
+                    onSubmit(form.getValues() as ServerPostInterface);
+                  },
+                  // eslint-disable-next-line no-console
+                  onCancel: () => console.log('Cancelled'),
+                });
             });
           }}
         >
-          Confirm
+          Posta server
         </Button>
       </main>
     </div>
