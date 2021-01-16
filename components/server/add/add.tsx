@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Form from 'components/forms/form';
 import Input from 'components/forms/input';
 import Button from 'components/button';
 import Typography from 'components/typography';
-
-import dynamic from 'next/dynamic';
 import MultipleSelect from 'components/forms/selectTags';
 import Cover from 'components/forms/cover';
 import Ip from 'components/forms/ip';
 import confirm from 'components/modal/confirm';
-import {
-  postServer,
-  ServerPostInterface,
-  useCreateServer,
-} from 'utils/hooks/data';
-import { useMutation } from 'react-query';
+import { ServerPostInterface, useCreateServer } from 'utils/hooks/data';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
