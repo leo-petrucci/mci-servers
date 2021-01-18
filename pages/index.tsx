@@ -8,9 +8,9 @@ import { useServers } from '../utils/hooks/data';
 const { Title } = Typography;
 
 const Home = (): JSX.Element => {
-  const { data, isFetching } = useServers();
+  const { data, isSuccess } = useServers();
   const { lastMonthIso, lastMonthName } = useLastMonth();
-  const { data: lastmonthData, isFetching: lastmonthIsFetching } = useServers(
+  const { data: lastmonthData, isSuccess: lastmonthIsSuccess } = useServers(
     lastMonthIso,
     'topServers'
   );
@@ -23,23 +23,23 @@ const Home = (): JSX.Element => {
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>Il top server di {lastMonthName}</Title>
         </div>
-        {lastmonthIsFetching ? (
-          'Loading...'
-        ) : (
+        {lastmonthIsSuccess && lastmonthData.length ? (
           <TopCard server={lastmonthData[0]} />
+        ) : (
+          'Loading...'
         )}
         <div className="mb-4">
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>I nostri server più poplari</Title>
         </div>
-        {isFetching ? (
-          'Loading...'
-        ) : (
+        {isSuccess && data.length ? (
           <>
             {data.map((server) => (
               <ServerCard server={server} />
             ))}
           </>
+        ) : (
+          'Loading...'
         )}
       </div>
     </div>

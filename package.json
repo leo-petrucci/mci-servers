@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_PUBLIC_REDIRECT_URL=http://localhost:3000 NEXT_PUBLIC_API_URL=http://localhost:4000 next dev",
+    "dev": "NEXT_PUBLIC_REDIRECT_URL=http://localhost:8080 NEXT_PUBLIC_API_URL=http://localhost:3000/api next dev -p 8080",
     "build": "next build",
     "start": "next start",
     "test": "jest",
