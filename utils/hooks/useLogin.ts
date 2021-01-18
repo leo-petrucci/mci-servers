@@ -28,7 +28,13 @@ export async function postLogin(code: string): Promise<AuthorInterface> {
 export const useLogin = (
   code: string
 ): QueryObserverResult<AuthorInterface, unknown> =>
-  useQuery('me', async () => {
-    const user = await postLogin(code);
-    return user;
-  });
+  useQuery(
+    'me',
+    async () => {
+      const user = await postLogin(code);
+      return user;
+    },
+    {
+      retry: false,
+    }
+  );
