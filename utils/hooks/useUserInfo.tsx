@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import React, { useContext } from 'react';
 import { gql } from 'graphql-request';
 import { QueryObserverResult, useQuery, UseQueryResult } from 'react-query';
 import { graphQLClient } from '../../pages/_app';
@@ -42,14 +41,7 @@ export async function getUser(): Promise<AuthorInterface> {
 }
 
 export const useUser = (): QueryObserverResult<AuthorInterface, unknown> =>
-  useQuery(
-    'me',
-    async () => {
-      const user = await getUser();
-      return user;
-    },
-    { retry: false }
-  );
+  useQuery('me', async () => getUser(), { retry: false });
 
 const UserInfoContext = ({
   children,

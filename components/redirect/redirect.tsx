@@ -8,7 +8,6 @@ const Redirect = (): JSX.Element => {
   const { status } = useLogin(router.query.code as string);
   useEffect(() => {
     if (status === 'success') {
-      console.log('login successful, redirecting to home');
       router.push('/');
     }
   }, [status, router]);

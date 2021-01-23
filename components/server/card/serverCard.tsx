@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { ServerObjectInterface } from 'utils/hooks/data';
+import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
@@ -9,7 +9,7 @@ import Tag from 'components/tag';
 import slugify from 'slugify';
 import Vote from '../vote';
 
-const { Paragraph, Title } = Typography;
+const { Paragraph } = Typography;
 
 const ServerCard = ({
   server,
@@ -43,12 +43,7 @@ const ServerCard = ({
           </div>
           <div className="col-span-6 p-2">
             <div className="pt-2 flex flex-wrap">
-              {tags &&
-                tags.map((tag) => (
-                  <Tag key={tag.id} onClick={() => console.log('shit')}>
-                    {tag.tagName}
-                  </Tag>
-                ))}
+              {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
             </div>
             <Paragraph lines={4}>{content}</Paragraph>
           </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/globals.css';
 import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import type { AppProps } from 'next/app';
 
 import Top from 'components/navigation/top';
@@ -64,6 +65,7 @@ export default function MciServers({
           </div>
         </div>
       </UserInfoContext>
+      {process.env.NODE_ENV && <ReactQueryDevtools />}
     </QueryClientProvider>
   );
 }

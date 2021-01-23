@@ -8,7 +8,11 @@ interface StatusPropsInterface {
 const Status = ({ online, slots }: StatusPropsInterface): JSX.Element => (
   <div className="text-gray-600 text-sm flex items-center">
     {slots}
-    <div className="ml-2 h-2 w-2 rounded-full bg-green-500" />
+    <div
+      className={`ml-2 h-2 w-2 rounded-full ${
+        online ? 'bg-green-500' : 'bg-red-500'
+      }`}
+    />
   </div>
 );
 

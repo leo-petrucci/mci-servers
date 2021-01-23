@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Typography from 'components/typography';
-import { ServerObjectInterface } from 'utils/hooks/data';
+import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
 import Author from 'components/author';
+import Version from 'components/version';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
-import Vote from './vote';
-import Status from './status';
+import Vote from 'components/server/vote';
+import Status from 'components/server/status';
 
 const { Title, Text } = Typography;
 
@@ -66,21 +67,18 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           <div className="mb-2">
             <Title level={5}>Tags</Title>
           </div>
-          {tags &&
-            tags.map((tag) => (
-              <Tag key={tag.id} onClick={() => console.log('shit')}>
-                {tag.tagName}
-              </Tag>
-            ))}
+          <div className="flex flex-wrap">
+            {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
+          </div>
         </div>
         {/* Version Container */}
         <div className="mb-4">
           <div className="mb-2">
-            <Title level={5}>Version</Title>
+            <Title level={5}>Versione</Title>
           </div>
-          <Tag key={version.id} onClick={() => console.log('shit')}>
-            {version.versionName}
-          </Tag>
+          <div className="flex flex-wrap">
+            <Version version={version} />
+          </div>
         </div>
         {/* Status Container */}
         <div className="mb-4">
@@ -107,8 +105,11 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             <Title level={5}>MOTD</Title>
           </div>
           {/* eslint-disable-next-line react/jsx-boolean-value */}
-          {info.motd?.clean.map((motd) => (
-            <Text type="secondary">{motd}</Text>
+          {info.motd?.clean.map((motd, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Text key={i} type="secondary">
+              {motd}
+            </Text>
           ))}
         </div>
       </aside>

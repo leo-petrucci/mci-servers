@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NEXT_PUBLIC_REDIRECT_URL=http://localhost:8080 NEXT_PUBLIC_API_URL=http://localhost:3000/api next dev -p 8080",
+    "dev:build": "NEXT_PUBLIC_REDIRECT_URL=http://localhost:8080 NEXT_PUBLIC_API_URL=http://localhost:3000/api next build",
     "build": "next build",
     "start": "next start",
     "test": "jest",
@@ -28,8 +29,7 @@
     "react-spring": "^9.0.0-rc.3",
     "showdown": "^1.9.1",
     "slugify": "^1.4.6",
-    "tailwindcss": "^2.0.1",
-    "wouter": "^2.7.0-alpha.1"
+    "tailwindcss": "^2.0.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.29.0",

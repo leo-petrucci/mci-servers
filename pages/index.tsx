@@ -5,7 +5,7 @@ import useLastMonth from 'utils/hooks/getLastMonth';
 import TopCard from 'components/server/topCard/topCard';
 import useTags from 'utils/hooks/useTags';
 import Tag from 'components/tag';
-import { useServers } from '../utils/hooks/data';
+import { useServers } from '../utils/hooks/useServers';
 
 const { Title } = Typography;
 
@@ -39,23 +39,7 @@ const Home = (): JSX.Element => {
           </div>
           <div className="flex flex-wrap">
             {tagIsSuccess &&
-              tagData.map((tag) => (
-                <Tag key={tag.id} onClick={() => console.log('shit')}>
-                  <span
-                    className="overflow-hidden"
-                    style={{
-                      WebkitLineClamp: 1,
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
-                    {tag.tagName}
-                  </span>
-                  <span className="text-xs ml-1 self-center">
-                    ({tag.popularity})
-                  </span>
-                </Tag>
-              ))}
+              tagData.map((tag) => <Tag key={tag.id} tag={tag} />)}
           </div>
         </div>
       </aside>

@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import React from 'react';
-import { TagInterface } from 'utils/hooks/useTags';
+import { VersionInterface } from 'utils/hooks/useServers';
 
-interface TagPropsInterface {
-  tag: TagInterface;
+interface VersionPropsInterface {
+  version: VersionInterface;
 }
 
-const Tag = ({ tag }: TagPropsInterface): JSX.Element => (
-  <Link href={`/tag/${tag.tagName}`}>
+const Version = ({ version }: VersionPropsInterface): JSX.Element => (
+  <Link href={`/version/${version.versionName}`}>
     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
     <a className="flex items-start mr-2 mb-2 bg-emerald-50 hover:bg-emerald-100 text-green-600 rounded-md h-6 px-2">
       <span
@@ -18,13 +18,10 @@ const Tag = ({ tag }: TagPropsInterface): JSX.Element => (
           WebkitBoxOrient: 'vertical',
         }}
       >
-        {tag.tagName}
+        {version.versionName}
       </span>
-      {tag.popularity && (
-        <span className="text-xs ml-1 self-center">({tag.popularity})</span>
-      )}
     </a>
   </Link>
 );
 
-export default Tag;
+export default Version;

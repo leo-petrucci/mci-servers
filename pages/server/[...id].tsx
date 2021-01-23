@@ -9,7 +9,7 @@ import {
   getServer,
   ServerObjectInterface,
   useServer,
-} from '../../utils/hooks/data';
+} from '../../utils/hooks/useServers';
 
 const ServerPage = ({
   server,
@@ -17,7 +17,10 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
+  const { data, isFetching } = useServer(
+    router.query.id && router.query.id[0],
+    {}
+  );
   if (server && !data) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
@@ -25,7 +28,6 @@ const ServerPage = ({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const server = await getServer(context.params.id[0] as string);
-
   return {
     props: { server }, // will be passed to the page component as props
   };
@@ -33,11 +35,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const {
-    feed,
-  }: { feed: ServerObjectInterface[] } = await graphQLClient.request(
+    allServers,
+  }: { allServers: ServerObjectInterface[] } = await graphQLClient.request(
     gql`
       query {
-        feed {
+        allServers {
           id
           title
           voteCount
@@ -46,15 +48,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     `
   );
 
-  let paths = feed.map((server) => {
-    if (server.voteCount > 0)
-      return {
-        params: {
-          id: [server.id.toString(), slugify(server.title)],
-        },
-      };
-    return null;
-  });
+  let paths = allServers.map((server) => ({
+    params: {
+      id: [server.id.toString(), slugify(server.title)],
+    },
+  }));
 
   paths = paths.filter((server) => server !== null);
 
