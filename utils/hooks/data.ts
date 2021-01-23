@@ -34,6 +34,7 @@ export interface ServerPostInterface {
 interface TagInterface {
   id: number;
   tagName: string;
+  popularity: number;
 }
 
 interface AuthorInterface {
@@ -107,6 +108,7 @@ export async function getServers(
           tags {
             id
             tagName
+            popularity
           }
         }
       }

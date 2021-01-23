@@ -2,17 +2,17 @@ import Author from 'components/author';
 import Button from 'components/button';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { useUser } from 'utils/hooks/useUser';
+import { useUserInfo } from 'utils/hooks/useUserInfo';
 
 const redirectUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL}`;
 
 const Auth = (): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching, isError } = useUser();
+  const { query } = useUserInfo();
 
-  if (isFetching) return <div>Loading...</div>;
+  if (query.isFetching) return <div>Loading...</div>;
 
-  if (isError)
+  if (query.isError)
     return (
       <>
         <Button
@@ -31,10 +31,11 @@ const Auth = (): JSX.Element => {
   return (
     <Author
       photoSize="small"
-      username={data.username}
-      photoUrl={data.photoUrl}
+      username={query.data.username}
+      photoUrl={query.data.photoUrl}
     />
   );
+  return null;
 };
 
 export default Auth;

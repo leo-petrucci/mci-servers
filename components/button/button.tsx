@@ -14,6 +14,7 @@ export interface ButtonPropsInterface {
   ariaLabel?: string;
   className?: string;
   loading?: boolean;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -22,6 +23,7 @@ export interface ButtonPropsInterface {
 const Button = ({
   children,
   onClick,
+  style,
   size,
   type,
   htmlType,
@@ -93,6 +95,7 @@ const Button = ({
 
   return (
     <button
+      style={style}
       aria-label={ariaLabel}
       // eslint-disable-next-line react/button-has-type
       type={htmlType}
