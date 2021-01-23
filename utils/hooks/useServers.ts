@@ -1,5 +1,4 @@
 import { gql } from 'graphql-request';
-import { StringValueNode } from 'graphql/language/ast';
 import {
   QueryObserverResult,
   useMutation,

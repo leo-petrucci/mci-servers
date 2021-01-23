@@ -15,11 +15,10 @@ export interface ServerInfoInterface {
   hostname: string;
 }
 
-export async function getInfo(ip): Promise<ServerInfoInterface> {
+export async function getInfo(ip: string): Promise<ServerInfoInterface> {
   const data = await fetch(`https://api.mcsrvstat.us/2/${ip}`)
     .then((response) => response.json())
-    .then((json) => json)
-    .catch((error) => console.log(error));
+    .then((json) => json);
   return data;
 }
 
