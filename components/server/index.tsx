@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
@@ -7,7 +8,6 @@ import Author from 'components/author';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from './vote';
 import Status from './status';
-import { useRouter } from 'next/router';
 
 const { Title, Text } = Typography;
 
