@@ -37,24 +37,26 @@ const Home = (): JSX.Element => {
           <div className="mb-2">
             <Title level={5}>Tags poplari</Title>
           </div>
-          {tagIsSuccess &&
-            tagData.map((tag) => (
-              <Tag key={tag.id} onClick={() => console.log('shit')}>
-                <span
-                  className="overflow-hidden"
-                  style={{
-                    WebkitLineClamp: 1,
-                    display: '-webkit-box',
-                    WebkitBoxOrient: 'vertical',
-                  }}
-                >
-                  {tag.tagName}
-                </span>
-                <span className="text-xs ml-1 self-center">
-                  ({tag.popularity})
-                </span>
-              </Tag>
-            ))}
+          <div className="flex flex-wrap">
+            {tagIsSuccess &&
+              tagData.map((tag) => (
+                <Tag key={tag.id} onClick={() => console.log('shit')}>
+                  <span
+                    className="overflow-hidden"
+                    style={{
+                      WebkitLineClamp: 1,
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                    }}
+                  >
+                    {tag.tagName}
+                  </span>
+                  <span className="text-xs ml-1 self-center">
+                    ({tag.popularity})
+                  </span>
+                </Tag>
+              ))}
+          </div>
         </div>
       </aside>
       <div className="col-span-10 py-4">

@@ -42,7 +42,7 @@ const ServerCard = ({
             </div>
           </div>
           <div className="col-span-6 p-2">
-            <div className="pt-2 flex">
+            <div className="pt-2 flex flex-wrap">
               {tags &&
                 tags.map((tag) => (
                   <Tag key={tag.id} onClick={() => console.log('shit')}>
