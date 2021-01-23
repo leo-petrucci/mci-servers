@@ -8,6 +8,7 @@ import Top from 'components/navigation/top';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
+import UserInfoContext from 'utils/hooks/useUserInfo';
 
 const endpoint = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -43,24 +44,26 @@ export default function MciServers({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div>
-        <Toaster />
-      </div>
-      <div className="m-auto" style={{ maxWidth: '1440px' }}>
-        <div className="grid grid-cols-12">
-          <div className="col-span-12 flex justify-center">
-            <Top />
-          </div>
-          <main className="col-span-12">
-            <div className="flex justify-center mt-4 mx-4">
-              <div style={{ maxWidth: '1152px' }} className="w-full">
-                {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-                <Component {...pageProps} />
-              </div>
-            </div>
-          </main>
+      <UserInfoContext>
+        <div>
+          <Toaster />
         </div>
-      </div>
+        <div className="m-auto" style={{ maxWidth: '1440px' }}>
+          <div className="grid grid-cols-12">
+            <div className="col-span-12 flex justify-center">
+              <Top />
+            </div>
+            <main className="col-span-12">
+              <div className="flex justify-center mt-4 mx-4">
+                <div className="w-full">
+                  {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+                  <Component {...pageProps} />
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </UserInfoContext>
     </QueryClientProvider>
   );
 }
