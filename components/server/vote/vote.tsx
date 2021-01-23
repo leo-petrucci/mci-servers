@@ -1,4 +1,3 @@
-import Button from 'components/button';
 import Icon from 'components/icon';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -40,7 +39,11 @@ const Vote = ({
     <div className="flex flex-col">
       <button
         type="button"
-        className="h-full w-full py-1 bg-emerald-50 hover:bg-emerald-100 text-green-600 rounded-md"
+        className={`h-full w-full py-1 ${
+          canVoteState
+            ? 'bg-emerald-50 hover:bg-emerald-100 text-green-600'
+            : 'bg-gray-100 text-gray-600 cursor-not-allowed'
+        } rounded-md`}
         onClick={() => {
           handleVote();
         }}

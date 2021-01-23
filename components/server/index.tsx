@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import { DateTime } from 'luxon';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
@@ -31,7 +30,6 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     version,
     ip,
   } = server;
-  const router = useRouter();
 
   const [info, setInfo] = useState({
     players: { online: 0, max: slots },
@@ -107,8 +105,11 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             <Title level={5}>MOTD</Title>
           </div>
           {/* eslint-disable-next-line react/jsx-boolean-value */}
-          {info.motd?.clean.map((motd) => (
-            <Text type="secondary">{motd}</Text>
+          {info.motd?.clean.map((motd, i) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <Text key={i} type="secondary">
+              {motd}
+            </Text>
           ))}
         </div>
       </aside>

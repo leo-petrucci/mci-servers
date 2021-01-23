@@ -36,11 +36,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const {
-    feed,
-  }: { feed: ServerObjectInterface[] } = await graphQLClient.request(
+    allServers,
+  }: { allServers: ServerObjectInterface[] } = await graphQLClient.request(
     gql`
       query {
-        al {
+        allServers {
           id
           title
           voteCount
@@ -49,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     `
   );
 
-  let paths = feed.map((server) => ({
+  let paths = allServers.map((server) => ({
     params: {
       id: [server.id.toString(), slugify(server.title)],
     },
