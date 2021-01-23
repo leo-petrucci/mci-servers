@@ -191,7 +191,7 @@ export const useServers = (
 
 export const useServersByTag = (
   tag: string,
-  key = 'servers',
+  key: string | string[],
   options?: UseQueryOptions<any>
 ): QueryObserverResult<ServerObjectInterface[], unknown> =>
   useQuery(

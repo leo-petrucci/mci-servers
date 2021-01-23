@@ -7,7 +7,7 @@ const TagPage = (): JSX.Element => {
   const router = useRouter();
   const { data, isSuccess } = useServersByTag(
     router.query.name && router.query.name[0],
-    'serversByTag',
+    ['serversByTag', router.query.name[0]],
     { enabled: Boolean(router.query.name) }
   );
   if (isSuccess) {

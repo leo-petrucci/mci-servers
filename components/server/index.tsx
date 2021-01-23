@@ -70,7 +70,10 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           </div>
           {tags &&
             tags.map((tag) => (
-              <Tag key={tag.id} onClick={() => console.log('shit')}>
+              <Tag
+                key={tag.id}
+                onClick={() => router.push(`/tag/${tag.tagName}`)}
+              >
                 {tag.tagName}
               </Tag>
             ))}

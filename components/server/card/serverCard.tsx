@@ -45,7 +45,10 @@ const ServerCard = ({
             <div className="pt-2 flex flex-wrap">
               {tags &&
                 tags.map((tag) => (
-                  <Tag key={tag.id} onClick={() => console.log('shit')}>
+                  <Tag
+                    key={tag.id}
+                    onClick={() => router.push(`/tag/${tag.tagName}`)}
+                  >
                     {tag.tagName}
                   </Tag>
                 ))}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
 import useLastMonth from 'utils/hooks/getLastMonth';
@@ -10,6 +11,7 @@ import { useServers } from '../utils/hooks/useServers';
 const { Title } = Typography;
 
 const Home = (): JSX.Element => {
+  const router = useRouter();
   const { data, isSuccess } = useServers();
   const { lastMonthIso, lastMonthName } = useLastMonth();
   const { data: lastmonthData, isSuccess: lastmonthIsSuccess } = useServers(
@@ -40,7 +42,10 @@ const Home = (): JSX.Element => {
           <div className="flex flex-wrap">
             {tagIsSuccess &&
               tagData.map((tag) => (
-                <Tag key={tag.id} onClick={() => console.log('shit')}>
+                <Tag
+                  key={tag.id}
+                  onClick={() => router.push(`/tag/${tag.tagName}`)}
+                >
                   <span
                     className="overflow-hidden"
                     style={{
