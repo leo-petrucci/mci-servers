@@ -19,7 +19,7 @@ const ServerPage = ({
   const router = useRouter();
   const { data, isFetching } = useServer(
     router.query.id && router.query.id[0],
-    { enabled: Boolean(router.query.id) }
+    {}
   );
   if (server && !data) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
@@ -28,7 +28,6 @@ const ServerPage = ({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const server = await getServer(context.params.id[0] as string);
-
   return {
     props: { server }, // will be passed to the page component as props
   };
