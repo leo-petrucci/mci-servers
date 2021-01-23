@@ -5,10 +5,10 @@ import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
 import Author from 'components/author';
-import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
-import Vote from './vote';
-import Status from './status';
 import Version from 'components/version';
+import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
+import Vote from 'components/server/vote';
+import Status from 'components/server/status';
 
 const { Title, Text } = Typography;
 

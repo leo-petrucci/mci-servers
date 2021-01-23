@@ -204,12 +204,17 @@ export const useServersByTag = (
   );
 
 export const useServer = (
-  id: string
+  id: string,
+  options: UseQueryOptions<any>
 ): QueryObserverResult<ServerObjectInterface, unknown> =>
-  useQuery(['server', id], async () => {
-    const server = await getServer(id);
-    return server;
-  });
+  useQuery(
+    ['server', id],
+    async () => {
+      const server = await getServer(id);
+      return server;
+    },
+    options
+  );
 
 export const useCreateServer = (): UseMutationResult<ServerObjectInterface> =>
   useMutation('addServer', async (body: ServerPostInterface) => {

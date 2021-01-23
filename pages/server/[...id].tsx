@@ -17,7 +17,10 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(router.query.id && router.query.id[0]);
+  const { data, isFetching } = useServer(
+    router.query.id && router.query.id[0],
+    { enabled: Boolean(router.query.id) }
+  );
   if (server && !data) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
   return <Server server={data} />;
@@ -37,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }: { feed: ServerObjectInterface[] } = await graphQLClient.request(
     gql`
       query {
-        feed {
+        al {
           id
           title
           voteCount
@@ -46,15 +49,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     `
   );
 
-  let paths = feed.map((server) => {
-    if (server.voteCount > 0)
-      return {
-        params: {
-          id: [server.id.toString(), slugify(server.title)],
-        },
-      };
-    return null;
-  });
+  let paths = feed.map((server) => ({
+    params: {
+      id: [server.id.toString(), slugify(server.title)],
+    },
+  }));
 
   paths = paths.filter((server) => server !== null);
 
