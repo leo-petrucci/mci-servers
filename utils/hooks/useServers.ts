@@ -44,7 +44,7 @@ interface AuthorInterface {
   photoUrl: string;
 }
 
-interface VersionInterface {
+export interface VersionInterface {
   id: number;
   versionName: string;
 }

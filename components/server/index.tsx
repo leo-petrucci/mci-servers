@@ -8,6 +8,7 @@ import Author from 'components/author';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from './vote';
 import Status from './status';
+import Version from 'components/version';
 
 const { Title, Text } = Typography;
 
@@ -75,11 +76,11 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
         {/* Version Container */}
         <div className="mb-4">
           <div className="mb-2">
-            <Title level={5}>Version</Title>
+            <Title level={5}>Versione</Title>
           </div>
-          {/* <Tag key={version.id} onClick={() => console.log('shit')}>
-            {version.versionName}
-          </Tag> */}
+          <div className="flex flex-wrap">
+            <Version version={version} />
+          </div>
         </div>
         {/* Status Container */}
         <div className="mb-4">
