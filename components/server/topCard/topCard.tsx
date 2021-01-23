@@ -34,13 +34,8 @@ const TopCard = ({
           <Title level={3}>
             <Link href={`/server/${id}/${slugify(title)}`}>{title}</Link>
           </Title>
-          <div className="py-1">
-            {tags &&
-              tags.map((tag) => (
-                <Tag key={tag.id} onClick={() => console.log('shit')}>
-                  {tag.tagName}
-                </Tag>
-              ))}
+          <div className="py-1 flex-wrap flex">
+            {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
           </div>
           <Paragraph lines={4}>{content}</Paragraph>
         </div>

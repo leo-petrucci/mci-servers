@@ -26,22 +26,18 @@ interface AuthorInterface {
 }
 
 export async function getUser(): Promise<AuthorInterface> {
-  try {
-    const { me } = await graphQLClient.request(
-      gql`
-        query {
-          me {
-            id
-            photoUrl
-            username
-          }
+  const { me } = await graphQLClient.request(
+    gql`
+      query {
+        me {
+          id
+          photoUrl
+          username
         }
-      `
-    );
-    return me;
-  } catch (err) {
-    return {} as AuthorInterface;
-  }
+      }
+    `
+  );
+  return me;
 }
 
 export const useUser = (): QueryObserverResult<AuthorInterface, unknown> =>

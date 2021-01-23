@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
 import useLastMonth from 'utils/hooks/getLastMonth';
@@ -11,7 +10,6 @@ import { useServers } from '../utils/hooks/useServers';
 const { Title } = Typography;
 
 const Home = (): JSX.Element => {
-  const router = useRouter();
   const { data, isSuccess } = useServers();
   const { lastMonthIso, lastMonthName } = useLastMonth();
   const { data: lastmonthData, isSuccess: lastmonthIsSuccess } = useServers(
@@ -41,26 +39,7 @@ const Home = (): JSX.Element => {
           </div>
           <div className="flex flex-wrap">
             {tagIsSuccess &&
-              tagData.map((tag) => (
-                <Tag
-                  key={tag.id}
-                  onClick={() => router.push(`/tag/${tag.tagName}`)}
-                >
-                  <span
-                    className="overflow-hidden"
-                    style={{
-                      WebkitLineClamp: 1,
-                      display: '-webkit-box',
-                      WebkitBoxOrient: 'vertical',
-                    }}
-                  >
-                    {tag.tagName}
-                  </span>
-                  <span className="text-xs ml-1 self-center">
-                    ({tag.popularity})
-                  </span>
-                </Tag>
-              ))}
+              tagData.map((tag) => <Tag key={tag.id} tag={tag} />)}
           </div>
         </div>
       </aside>

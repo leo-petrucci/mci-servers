@@ -68,24 +68,18 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           <div className="mb-2">
             <Title level={5}>Tags</Title>
           </div>
-          {tags &&
-            tags.map((tag) => (
-              <Tag
-                key={tag.id}
-                onClick={() => router.push(`/tag/${tag.tagName}`)}
-              >
-                {tag.tagName}
-              </Tag>
-            ))}
+          <div className="flex flex-wrap">
+            {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
+          </div>
         </div>
         {/* Version Container */}
         <div className="mb-4">
           <div className="mb-2">
             <Title level={5}>Version</Title>
           </div>
-          <Tag key={version.id} onClick={() => console.log('shit')}>
+          {/* <Tag key={version.id} onClick={() => console.log('shit')}>
             {version.versionName}
-          </Tag>
+          </Tag> */}
         </div>
         {/* Status Container */}
         <div className="mb-4">

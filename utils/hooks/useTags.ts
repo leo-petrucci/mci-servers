@@ -3,7 +3,7 @@ import throttle from 'lodash.throttle';
 import { QueryObserverResult, useQuery } from 'react-query';
 import { graphQLClient } from '../../pages/_app';
 
-interface TagInterface {
+export interface TagInterface {
   id: number;
   tagName: string;
   popularity: number;
