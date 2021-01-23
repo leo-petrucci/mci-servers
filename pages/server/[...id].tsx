@@ -9,7 +9,7 @@ import {
   getServer,
   ServerObjectInterface,
   useServer,
-} from '../../utils/hooks/data';
+} from '../../utils/hooks/useServers';
 
 const ServerPage = ({
   server,

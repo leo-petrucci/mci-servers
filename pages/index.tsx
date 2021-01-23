@@ -5,7 +5,7 @@ import useLastMonth from 'utils/hooks/getLastMonth';
 import TopCard from 'components/server/topCard/topCard';
 import useTags from 'utils/hooks/useTags';
 import Tag from 'components/tag';
-import { useServers } from '../utils/hooks/data';
+import { useServers } from '../utils/hooks/useServers';
 
 const { Title } = Typography;
 

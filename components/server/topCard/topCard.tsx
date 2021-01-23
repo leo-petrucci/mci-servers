@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import slugify from 'slugify';
 import { useRouter } from 'next/router';
-import { ServerObjectInterface } from 'utils/hooks/data';
+import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';

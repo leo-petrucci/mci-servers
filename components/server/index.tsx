@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
 import Typography from 'components/typography';
-import { ServerObjectInterface } from 'utils/hooks/data';
+import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
 import Author from 'components/author';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from './vote';
 import Status from './status';
+import { useRouter } from 'next/router';
 
 const { Title, Text } = Typography;
 
@@ -29,6 +30,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     version,
     ip,
   } = server;
+  const router = useRouter();
 
   const [info, setInfo] = useState({
     players: { online: 0, max: slots },

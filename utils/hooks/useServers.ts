@@ -5,6 +5,7 @@ import {
   useMutation,
   UseMutationResult,
   useQuery,
+  UseQueryOptions,
 } from 'react-query';
 import { graphQLClient } from '../../pages/_app';
 
@@ -117,6 +118,42 @@ export async function getServers(
   return feed;
 }
 
+export async function getServersByTag(
+  tag: string
+): Promise<ServerObjectInterface[]> {
+  const { feedByTag } = await graphQLClient.request(
+    gql`
+      query {
+        feedByTag (tag: "${tag}") {
+          id
+          title
+          ip
+          createdAt
+          voteCount
+          canVote
+          cover
+          content
+          author {
+            id
+            username
+            photoUrl
+          }
+          version {
+            id
+            versionName
+          }
+          tags {
+            id
+            tagName
+            popularity
+          }
+        }
+      }
+    `
+  );
+  return feedByTag;
+}
+
 export async function postServer({
   title,
   content,
@@ -151,6 +188,20 @@ export const useServers = (
     const servers = await getServers(date);
     return servers;
   });
+
+export const useServersByTag = (
+  tag: string,
+  key = 'servers',
+  options?: UseQueryOptions<any>
+): QueryObserverResult<ServerObjectInterface[], unknown> =>
+  useQuery(
+    key,
+    async () => {
+      const servers = await getServersByTag(tag);
+      return servers;
+    },
+    options
+  );
 
 export const useServer = (
   id: string

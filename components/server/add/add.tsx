@@ -8,7 +8,7 @@ import MultipleSelect from 'components/forms/selectTags';
 import Cover from 'components/forms/cover';
 import Ip from 'components/forms/ip';
 import confirm from 'components/modal/confirm';
-import { ServerPostInterface, useCreateServer } from 'utils/hooks/data';
+import { ServerPostInterface, useCreateServer } from 'utils/hooks/useServers';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';

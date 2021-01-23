@@ -28,8 +28,7 @@
     "react-spring": "^9.0.0-rc.3",
     "showdown": "^1.9.1",
     "slugify": "^1.4.6",
-    "tailwindcss": "^2.0.1",
-    "wouter": "^2.7.0-alpha.1"
+    "tailwindcss": "^2.0.1"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.29.0",

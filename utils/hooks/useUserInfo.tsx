@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import React, { useContext } from 'react';
 import { gql } from 'graphql-request';
 import { QueryObserverResult, useQuery, UseQueryResult } from 'react-query';
 import { graphQLClient } from '../../pages/_app';
@@ -27,29 +26,26 @@ interface AuthorInterface {
 }
 
 export async function getUser(): Promise<AuthorInterface> {
-  const { me } = await graphQLClient.request(
-    gql`
-      query {
-        me {
-          id
-          photoUrl
-          username
+  try {
+    const { me } = await graphQLClient.request(
+      gql`
+        query {
+          me {
+            id
+            photoUrl
+            username
+          }
         }
-      }
-    `
-  );
-  return me;
+      `
+    );
+    return me;
+  } catch (err) {
+    return {} as AuthorInterface;
+  }
 }
 
 export const useUser = (): QueryObserverResult<AuthorInterface, unknown> =>
-  useQuery(
-    'me',
-    async () => {
-      const user = await getUser();
-      return user;
-    },
-    { retry: false }
-  );
+  useQuery('me', async () => getUser(), { retry: false });
 
 const UserInfoContext = ({
   children,
