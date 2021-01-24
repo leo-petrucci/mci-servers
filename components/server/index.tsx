@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
+import ReactMarkdown from 'react-markdown';
 import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
@@ -137,7 +138,9 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           <div className="mb-2">
             <Title level={5}>Descrizione</Title>
           </div>
-          <article className="prose">{content && content}</article>
+          <article className="prose">
+            <ReactMarkdown>{content}</ReactMarkdown>
+          </article>
         </div>
       </main>
     </div>

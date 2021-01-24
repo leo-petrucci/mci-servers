@@ -41,6 +41,7 @@ const AddServer = (): JSX.Element => {
   const mutation = useCreateServer();
 
   const onSubmit = (body: ServerPostInterface) => {
+    console.log(body);
     const serverToastId = toast.loading('Postando il tuo server...');
     mutation.mutate(body, {
       onError: () => {
@@ -98,7 +99,7 @@ const AddServer = (): JSX.Element => {
                 message: 'Devi aggiungere una descrizione.',
               },
               minLength: {
-                value: 200,
+                value: 280,
                 message: 'La descrizione deve essere almeno 200 caratteri.',
               },
               maxLength: {
