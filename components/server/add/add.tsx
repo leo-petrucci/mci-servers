@@ -29,7 +29,7 @@ const layout = {
 const AddServer = (): JSX.Element => {
   const router = useRouter();
   const form = Form.useForm({
-    criteriaMode: 'all',
+    mode: 'onChange',
     defaultValues: { tags: [] },
   });
   const [isClient, setIsClient] = useState(false);
@@ -41,7 +41,6 @@ const AddServer = (): JSX.Element => {
   const mutation = useCreateServer();
 
   const onSubmit = (body: ServerPostInterface) => {
-    console.log(body);
     const serverToastId = toast.loading('Postando il tuo server...');
     mutation.mutate(body, {
       onError: () => {
@@ -94,13 +93,24 @@ const AddServer = (): JSX.Element => {
             label="Descrizione"
             {...layout}
             rules={{
+              validate: (value) => {
+                const arr = [
+                  ...value.matchAll(
+                    /!\[[^\]]*\]\(https:[/|.|\w|\s|-]*\.(?:jpg|png|svg|gif)\)/g
+                  ),
+                ];
+                return (
+                  arr.length > 1 ||
+                  'Assicurati di aggiungere almeno due immagini alla tua descrizione. ![](<immagine>)'
+                );
+              },
               required: {
                 value: true,
                 message: 'Devi aggiungere una descrizione.',
               },
               minLength: {
                 value: 280,
-                message: 'La descrizione deve essere almeno 200 caratteri.',
+                message: 'La descrizione deve essere almeno 280 caratteri.',
               },
               maxLength: {
                 value: 10000,
