@@ -1,6 +1,8 @@
 import { gql } from 'graphql-request';
 import {
   QueryObserverResult,
+  useInfiniteQuery,
+  UseInfiniteQueryResult,
   useMutation,
   UseMutationResult,
   useQuery,
@@ -82,12 +84,13 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
   return server;
 }
 export async function getServers(
+  page: number,
   date?: string
 ): Promise<ServerObjectInterface[]> {
   const { feed } = await graphQLClient.request(
     gql`
       query {
-        feed ${date ? `(date: "${date}")` : ''} {
+        feed (page: ${page} ${date ? `, date: "${date}"` : ''}) {
           id
           title
           ip
@@ -118,12 +121,13 @@ export async function getServers(
 }
 
 export async function getServersByTag(
-  tag: string
+  tag: string,
+  page: number
 ): Promise<ServerObjectInterface[]> {
   const { feedByTag } = await graphQLClient.request(
     gql`
       query {
-        feedByTag (tag: "${tag}") {
+        feedByTag (page: ${page}, tag: "${tag}") {
           id
           title
           ip
@@ -182,24 +186,41 @@ export async function postServer({
 export const useServers = (
   date?: string,
   key = 'servers'
-): QueryObserverResult<ServerObjectInterface[], unknown> =>
-  useQuery(key, async () => {
-    const servers = await getServers(date);
-    return servers;
-  });
+): UseInfiniteQueryResult<any> =>
+  useInfiniteQuery(
+    key,
+    async ({ pageParam = 0 }) => {
+      const servers = await getServers(pageParam, date);
+      return servers;
+    },
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < 15) return false;
+        if (allPages.length === 10) return false;
+        return allPages.length;
+      },
+    }
+  );
 
 export const useServersByTag = (
   tag: string,
   key: string | string[],
   options?: UseQueryOptions<any>
-): QueryObserverResult<ServerObjectInterface[], unknown> =>
-  useQuery(
+): UseInfiniteQueryResult<any> =>
+  useInfiniteQuery(
     key,
-    async () => {
-      const servers = await getServersByTag(tag);
+    async ({ pageParam = 0 }) => {
+      const servers = await getServersByTag(tag, pageParam);
       return servers;
     },
-    options
+    {
+      ...options,
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < 15) return false;
+        if (allPages.length === 10) return false;
+        return allPages.length;
+      },
+    }
   );
 
 export const useServer = (

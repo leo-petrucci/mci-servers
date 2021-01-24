@@ -77,7 +77,11 @@ const Button = ({
             : 'bg-gray-100 text-gray-600'
         }	focus:outline-none focus:ring-2 focus:ring-green-100`;
       case 'secondary':
-        return 'bg-opacity-0 border hover:bg-opacity-0 text-gray-400 hover:text-green-600 hover:border-green-600';
+        return `${
+          !disabled
+            ? 'bg-opacity-0 border hover:bg-opacity-0 text-gray-400 hover:text-green-600 hover:border-green-600'
+            : 'bg-gray-100 text-gray-600'
+        } `;
       case 'link':
         return 'text-green-600 hover:text-green-500';
     }
