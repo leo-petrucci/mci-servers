@@ -18,7 +18,7 @@ export const graphQLClient = new GraphQLClient(endpoint, {
   mode: 'cors',
 });
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,

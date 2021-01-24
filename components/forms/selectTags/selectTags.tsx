@@ -108,6 +108,7 @@ const SelectTags = (): JSX.Element => {
         {isFocused && (
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           <Dropdown
+            search={search}
             isFetching={isFetching}
             data={data}
             value={value}
@@ -133,6 +134,7 @@ const SelectTags = (): JSX.Element => {
 interface DropdownPropsInterface {
   isFetching: boolean;
   data: any[];
+  search: string;
   value: string[];
   selectOption: (tagName: string) => void;
   setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
@@ -141,6 +143,7 @@ interface DropdownPropsInterface {
 const Dropdown = ({
   isFetching,
   data,
+  search,
   value,
   selectOption,
   setIsFocused,
@@ -163,6 +166,17 @@ const Dropdown = ({
   return (
     <div className="relative" ref={dropdownRef}>
       <div className="flex flex-col mt-2 absolute w-full  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        {search && (
+          <button
+            type="button"
+            className="text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            onClick={() => {
+              selectOption(search);
+            }}
+          >
+            {search}
+          </button>
+        )}
         {isFetching
           ? 'Loading...'
           : data.map((tagOption) => {

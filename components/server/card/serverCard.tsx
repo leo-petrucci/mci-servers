@@ -1,15 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
+import { DateTime } from 'luxon';
 import { useRouter } from 'next/router';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
-import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
+import Author from 'components/author';
 import slugify from 'slugify';
 import Vote from '../vote';
-
-const { Paragraph } = Typography;
 
 const ServerCard = ({
   server,
@@ -17,7 +16,16 @@ const ServerCard = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { id, title, voteCount, cover, content, tags, canVote } = server;
+  const {
+    id,
+    title,
+    voteCount,
+    cover,
+    author,
+    tags,
+    canVote,
+    createdAt,
+  } = server;
   return (
     <>
       <article className="col-span-12 lg:col-span-4 md:col-span-6 grid grid-cols-12 mb-4 p-2">
@@ -41,11 +49,22 @@ const ServerCard = ({
               </h3>
             </div>
           </div>
-          <div className="col-span-6 p-2">
-            <div className="pt-2 flex flex-wrap">
+
+          <div className="col-span-6 px-2 pt-4">
+            <Author
+              photoSize="small"
+              id={author.id}
+              username={author.username}
+              photoUrl={author.photoUrl}
+              subtitle={DateTime.fromISO(createdAt).toLocaleString(
+                DateTime.DATE_FULL
+              )}
+            />
+          </div>
+          <div className="col-span-6 px-2 pt-4">
+            <div className="flex flex-wrap">
               {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
             </div>
-            <Paragraph lines={4}>{content}</Paragraph>
           </div>
           <div className="pt-2">
             <Button

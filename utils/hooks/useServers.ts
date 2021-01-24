@@ -165,7 +165,7 @@ export async function postServer({
       mutation {
         createServer (
           title: "${title}",
-          content: "${content}",
+          content: """${content}""",
           tags: ${JSON.stringify(tags)},
           ip: "${ip}",
           cover: "${cover}",

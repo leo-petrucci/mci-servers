@@ -26,18 +26,48 @@ interface AuthorInterface {
 }
 
 export async function getUser(): Promise<AuthorInterface> {
-  const { me } = await graphQLClient.request(
-    gql`
-      query {
-        me {
-          id
-          photoUrl
-          username
+  try {
+    const { me } = await graphQLClient.request(
+      gql`
+        query {
+          me {
+            id
+            photoUrl
+            username
+          }
         }
-      }
-    `
-  );
-  return me;
+      `
+    );
+    return me;
+  } catch (err) {
+    try {
+      await graphQLClient.request(
+        gql`
+          mutation {
+            refresh {
+              user {
+                username
+              }
+            }
+          }
+        `
+      );
+      const { me } = await graphQLClient.request(
+        gql`
+          query {
+            me {
+              id
+              photoUrl
+              username
+            }
+          }
+        `
+      );
+      return me;
+    } catch {
+      throw new Error('User is not logged in.');
+    }
+  }
 }
 
 export const useUser = (): QueryObserverResult<AuthorInterface, unknown> =>
