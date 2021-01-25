@@ -15,6 +15,7 @@ export interface ServerObjectInterface {
   title: string;
   ip: string;
   content: string;
+  hasEditPrivileges: boolean;
   createdAt: string;
   slots: number;
   cover: string;
@@ -59,6 +60,7 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
             id
             title
             ip
+            hasEditPrivileges
             content
             createdAt
             slots

@@ -12,7 +12,6 @@ import { ServerPostInterface, useCreateServer } from 'utils/hooks/useServers';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
-import { TagInterface } from 'utils/hooks/useTags';
 
 const { Text } = Typography;
 
@@ -66,19 +65,31 @@ const AddServer = ({
       serverPayload.id = serverId;
     }
 
-    const serverToastId = toast.loading('Postando il tuo server...');
+    const serverToastId = toast.loading(
+      serverId ? 'Modificando il tuo server...' : 'Postando il tuo server...'
+    );
     mutation.mutate(serverPayload, {
       onError: () => {
-        toast.error("C'e' stato un problema nel postare il tuo server.", {
-          id: serverToastId,
-          duration: 5000,
-        });
+        toast.error(
+          serverId
+            ? "C'e' stato un problema nel modificare il tuo server."
+            : "C'e' stato un problema nel postare il tuo server.",
+          {
+            id: serverToastId,
+            duration: 5000,
+          }
+        );
       },
       onSuccess: (res) => {
-        toast.success("Il tuo server e' stato postato.", {
-          id: serverToastId,
-          duration: 5000,
-        });
+        toast.success(
+          serverId
+            ? "Il tuo server e' stato modificato."
+            : "Il tuo server e' stato postato.",
+          {
+            id: serverToastId,
+            duration: 5000,
+          }
+        );
         router.push(`/server/${res.id}/${slugify(res.title)}`);
       },
     });
@@ -195,9 +206,9 @@ const AddServer = ({
               form.trigger().then((res) => {
                 if (res)
                   confirm({
-                    title: 'Are you sure you want to add this Organisation?',
+                    title: 'Sei sicuro di voler postare questo server?',
                     content:
-                      'Make sure you have thoroughly checked the information before submitting.',
+                      'Assicurati che tutte le informazioni siano corrette.',
                     // eslint-disable-next-line no-console
                     onOk: () => {
                       onSubmit(form.getValues() as ServerPostInterface);

@@ -5,10 +5,12 @@ import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
 import Author from 'components/author';
+import confirm from 'components/modal/confirm';
 import Version from 'components/version';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from 'components/server/vote';
 import Status from 'components/server/status';
+import { useRouter } from 'next/router';
 
 const { Title, Text } = Typography;
 
@@ -23,6 +25,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     tags,
     voteCount,
     slots,
+    hasEditPrivileges,
     id,
     author,
     createdAt,
@@ -31,6 +34,8 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     version,
     ip,
   } = server;
+
+  const router = useRouter();
 
   const [info, setInfo] = useState({
     players: { online: 0, max: slots },
@@ -44,6 +49,10 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
       setInfo(data);
     }
   }, [status, data]);
+
+  const onDelete = () => {
+    console.log('delete');
+  };
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -123,12 +132,44 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           style={{ backgroundImage: `url(${cover})` }}
         >
           <div
-            className="h-full w-full flex items-end p-4"
+            className="relative h-full w-full flex items-end p-4"
             style={{
               background:
                 'linear-gradient(0deg, rgba(2,0,36,.5) 0%, rgba(0,0,0,0) 50%)',
             }}
           >
+            {hasEditPrivileges && (
+              <div className="absolute flex right-0 top-0 px-4 py-4">
+                <button
+                  onClick={() =>
+                    router.push(`/server/edit/${router.query.id[0]}`)
+                  }
+                  type="button"
+                  className="bg-gray-100 border border-gray-300 rounded-md px-4 py-2 bg-gradient-to-b from-white to-gray-100 mr-4"
+                >
+                  Modifica
+                </button>
+                <button
+                  onClick={() => {
+                    confirm({
+                      title: 'Sei sicuro di voler rimuovere questo server?',
+                      content:
+                        'Server eliminati possono essere riattivati da moderatori e amministratori.',
+                      // eslint-disable-next-line no-console
+                      onOk: () => {
+                        onDelete();
+                      },
+                      // eslint-disable-next-line no-console
+                      onCancel: () => console.log('Cancelled'),
+                    });
+                  }}
+                  type="button"
+                  className="bg-red-100 border border-red-600 rounded-md px-4 py-2 bg-gradient-to-b from-red-500 to-red-600 text-white"
+                >
+                  Elimina
+                </button>
+              </div>
+            )}
             <Title level={1} className="text-white">
               {title && title}
             </Title>
