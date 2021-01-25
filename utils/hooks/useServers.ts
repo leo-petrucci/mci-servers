@@ -26,6 +26,7 @@ export interface ServerObjectInterface {
 }
 
 export interface ServerPostInterface {
+  id?: number;
   title: string;
   content: string;
   cover: string;

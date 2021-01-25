@@ -12,6 +12,7 @@ import { ServerPostInterface, useCreateServer } from 'utils/hooks/useServers';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
+import { TagInterface } from 'utils/hooks/useTags';
 
 const { Text } = Typography;
 
@@ -26,11 +27,27 @@ const layout = {
   },
 };
 
-const AddServer = (): JSX.Element => {
+interface ServerDefaultValues {
+  title: string;
+  content: string;
+  ip: string;
+  tags: string[];
+  cover: string;
+}
+
+const AddServer = ({
+  submitText,
+  serverId,
+  defaultValues,
+}: {
+  submitText?: string;
+  serverId?: number;
+  defaultValues?: ServerDefaultValues;
+}): JSX.Element => {
   const router = useRouter();
   const form = Form.useForm({
     mode: 'onChange',
-    defaultValues: { tags: [] },
+    defaultValues,
   });
   const [isClient, setIsClient] = useState(false);
 
@@ -41,8 +58,16 @@ const AddServer = (): JSX.Element => {
   const mutation = useCreateServer();
 
   const onSubmit = (body: ServerPostInterface) => {
+    const serverPayload = {
+      ...body,
+    };
+
+    if (serverId) {
+      serverPayload.id = serverId;
+    }
+
     const serverToastId = toast.loading('Postando il tuo server...');
-    mutation.mutate(body, {
+    mutation.mutate(serverPayload, {
       onError: () => {
         toast.error("C'e' stato un problema nel postare il tuo server.", {
           id: serverToastId,
@@ -164,29 +189,37 @@ const AddServer = (): JSX.Element => {
             </Text>
           </div>
         </Form>
-        <Button
-          onClick={async () => {
-            form.trigger().then((res) => {
-              if (res)
-                confirm({
-                  title: 'Are you sure you want to add this Organisation?',
-                  content:
-                    'Make sure you have thoroughly checked the information before submitting.',
-                  // eslint-disable-next-line no-console
-                  onOk: () => {
-                    onSubmit(form.getValues() as ServerPostInterface);
-                  },
-                  // eslint-disable-next-line no-console
-                  onCancel: () => console.log('Cancelled'),
-                });
-            });
-          }}
-        >
-          Posta server
-        </Button>
+        <div className="flex justify-end">
+          <Button
+            onClick={async () => {
+              form.trigger().then((res) => {
+                if (res)
+                  confirm({
+                    title: 'Are you sure you want to add this Organisation?',
+                    content:
+                      'Make sure you have thoroughly checked the information before submitting.',
+                    // eslint-disable-next-line no-console
+                    onOk: () => {
+                      onSubmit(form.getValues() as ServerPostInterface);
+                    },
+                    // eslint-disable-next-line no-console
+                    onCancel: () => console.log('Cancelled'),
+                  });
+              });
+            }}
+          >
+            {submitText}
+          </Button>
+        </div>
       </main>
     </div>
   );
+};
+
+AddServer.defaultProps = {
+  serverId: null,
+  defaultValues: { tags: [] },
+  submitText: 'Posta server',
 };
 
 export default AddServer;
