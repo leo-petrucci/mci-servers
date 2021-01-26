@@ -4,7 +4,7 @@ import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import type { AppProps } from 'next/app';
-
+import 'components/tooltip/tooltip.css';
 import Top from 'components/navigation/top';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/router';

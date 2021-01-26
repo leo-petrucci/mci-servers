@@ -53,7 +53,6 @@ const Auth = (): JSX.Element => {
       )}
     </div>
   );
-  return null;
 };
 
 const Dropdown = ({

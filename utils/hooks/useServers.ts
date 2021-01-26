@@ -15,6 +15,8 @@ export interface ServerObjectInterface {
   title: string;
   ip: string;
   content: string;
+  hasEditPrivileges: boolean;
+  published: boolean;
   createdAt: string;
   slots: number;
   cover: string;
@@ -26,6 +28,7 @@ export interface ServerObjectInterface {
 }
 
 export interface ServerPostInterface {
+  id?: number;
   title: string;
   content: string;
   cover: string;
@@ -58,8 +61,10 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
             id
             title
             ip
+            hasEditPrivileges
             content
             createdAt
+            published
             slots
             cover
             voteCount
@@ -98,6 +103,7 @@ export async function getServers(
           voteCount
           canVote
           cover
+          published
           content
           author {
             id
@@ -135,6 +141,7 @@ export async function getServersByTag(
           voteCount
           canVote
           cover
+          published
           content
           author {
             id
