@@ -5,12 +5,10 @@ import Typography from 'components/typography';
 import { ServerObjectInterface } from 'utils/hooks/useServers';
 import Tag from 'components/tag';
 import Author from 'components/author';
-import confirm from 'components/modal/confirm';
 import Version from 'components/version';
 import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from 'components/server/vote';
 import Status from 'components/server/status';
-import { useRouter } from 'next/router';
 import Controls from './controls';
 
 const { Title, Text } = Typography;
@@ -36,8 +34,6 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     ip,
   } = server;
 
-  const router = useRouter();
-
   const [info, setInfo] = useState({
     players: { online: 0, max: slots },
     online: true,
@@ -51,12 +47,15 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     }
   }, [status, data]);
 
-  const onDelete = () => {
-    console.log('delete');
-  };
-
   return (
     <div className="grid grid-cols-12 gap-4">
+      <div
+        className="col-span-full bg-orange-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+        role="alert"
+      >
+        <p className="font-bold">Attenzione</p>
+        <p>Questo server non è visible al pubblico.</p>
+      </div>
       {/* Sidebar */}
       <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
         {/* Profile Container */}
