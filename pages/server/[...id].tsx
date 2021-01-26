@@ -19,7 +19,7 @@ const ServerPage = ({
   const router = useRouter();
   const { data, isFetching } = useServer(
     router.query.id && router.query.id[0],
-    { enabled: Boolean(router.query.id) }
+    {}
   );
   if (server && !data) return <Server server={server} />;
   if (isFetching) return <>Loading...</>;
