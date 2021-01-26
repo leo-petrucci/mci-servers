@@ -11,6 +11,7 @@ import { useInfo, ServerInfoInterface } from 'utils/hooks/useServerInfo';
 import Vote from 'components/server/vote';
 import Status from 'components/server/status';
 import { useRouter } from 'next/router';
+import Controls from './controls';
 
 const { Title, Text } = Typography;
 
@@ -139,35 +140,8 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             }}
           >
             {hasEditPrivileges && (
-              <div className="absolute flex right-0 top-0 px-4 py-4">
-                <button
-                  onClick={() =>
-                    router.push(`/server/edit/${router.query.id[0]}`)
-                  }
-                  type="button"
-                  className="bg-gray-100 border border-gray-300 rounded-md px-4 py-2 bg-gradient-to-b from-white to-gray-100 mr-4"
-                >
-                  Modifica
-                </button>
-                <button
-                  onClick={() => {
-                    confirm({
-                      title: 'Sei sicuro di voler rimuovere questo server?',
-                      content:
-                        'Server eliminati possono essere riattivati da moderatori e amministratori.',
-                      // eslint-disable-next-line no-console
-                      onOk: () => {
-                        onDelete();
-                      },
-                      // eslint-disable-next-line no-console
-                      onCancel: () => console.log('Cancelled'),
-                    });
-                  }}
-                  type="button"
-                  className="bg-red-100 border border-red-600 rounded-md px-4 py-2 bg-gradient-to-b from-red-500 to-red-600 text-white"
-                >
-                  Elimina
-                </button>
+              <div className="absolute right-0 top-0 px-4 py-4">
+                <Controls serverId={server.id} />
               </div>
             )}
             <Title level={1} className="text-white">
