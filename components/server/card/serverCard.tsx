@@ -10,6 +10,7 @@ import Author from 'components/author';
 import slugify from 'slugify';
 import Tooltip from 'components/tooltip';
 import Vote from 'components/server/vote';
+import Skeleton from './skeleton';
 
 const ServerCard = ({
   server,
@@ -111,5 +112,7 @@ const ServerCard = ({
     </>
   );
 };
+
+ServerCard.Skeleton = Skeleton;
 
 export default ServerCard;

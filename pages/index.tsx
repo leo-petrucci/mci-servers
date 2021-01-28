@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import throttle from 'lodash.throttle';
 import Typography from 'components/typography';
 import ServerCard from 'components/server/card';
 import useLastMonth from 'utils/hooks/getLastMonth';
@@ -8,18 +9,30 @@ import Tag from 'components/tag';
 import useIntersectionObserver from 'utils/hooks/useIntersectionObserver';
 import { useServers } from 'utils/hooks/useServers';
 import Button from 'components/button';
+import Input from 'components/forms/input';
+import Icon from 'components/icon';
 
 const { Title } = Typography;
 
 const Home = (): JSX.Element => {
+  const [search, setSearch] = useState('');
+
+  const searchFunc = (e) => {
+    setSearch(e.target.value);
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const throttledSearch = useCallback(throttle(searchFunc, 400), []);
+
   const loadMoreButtonRef = useRef();
   const {
     data,
     isSuccess,
+    isFetching,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useServers();
+  } = useServers(null, 'servers', search);
   const { lastMonthIso, lastMonthName } = useLastMonth();
   const { data: lastmonthData, isSuccess: lastmonthIsSuccess } = useServers(
     lastMonthIso,
@@ -63,7 +76,24 @@ const Home = (): JSX.Element => {
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>I nostri server più poplari</Title>
         </div>
-        {isSuccess && data.pages.length ? (
+        <div className="grid grid-cols-12 mb-4">
+          <div className="flex items-center col-start-9 col-span-4 shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-400">
+            <input
+              onChange={throttledSearch}
+              type="text"
+              placeholder="Cerca server"
+              className="w-full"
+            />
+            <Icon>
+              <path
+                fillRule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clipRule="evenodd"
+              />
+            </Icon>
+          </div>
+        </div>
+        {isSuccess && !isFetching && data.pages.length ? (
           <div className="grid grid-cols-12">
             {data.pages.map((page, i) => (
               // eslint-disable-next-line react/no-array-index-key
@@ -75,7 +105,13 @@ const Home = (): JSX.Element => {
             ))}
           </div>
         ) : (
-          'Loading...'
+          <div className="grid grid-cols-12">
+            {Array(10)
+              .fill(0)
+              .map((i) => (
+                <ServerCard.Skeleton key={i} />
+              ))}
+          </div>
         )}
 
         <div
