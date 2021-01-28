@@ -30,6 +30,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
     createdAt,
     cover,
     canVote,
+    published,
     version,
     ip,
   } = server;
@@ -49,13 +50,15 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
 
   return (
     <div className="grid grid-cols-12 gap-4">
-      <div
-        className="col-span-full bg-orange-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
-        role="alert"
-      >
-        <p className="font-bold">Attenzione</p>
-        <p>Questo server non è visible al pubblico.</p>
-      </div>
+      {!published && (
+        <div
+          className="col-span-full bg-orange-100 border-l-4 border-yellow-500 text-yellow-700 p-4"
+          role="alert"
+        >
+          <p className="font-bold">Attenzione</p>
+          <p>Questo server non è visible al pubblico.</p>
+        </div>
+      )}
       {/* Sidebar */}
       <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
         {/* Profile Container */}
