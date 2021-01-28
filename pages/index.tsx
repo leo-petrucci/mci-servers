@@ -18,7 +18,7 @@ const { Title } = Typography;
 const Home = (): JSX.Element => {
   const [search, setSearch] = useState('');
 
-  const searchFunc = (e) => {
+  const searchFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
