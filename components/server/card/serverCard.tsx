@@ -12,6 +12,7 @@ import Tooltip from 'components/tooltip';
 import Typography from 'components/typography';
 import Version from 'components/version';
 import Vote from 'components/server/vote';
+import Skeleton from './skeleton';
 
 const { Title } = Typography;
 
@@ -122,5 +123,7 @@ const ServerCard = ({
     </>
   );
 };
+
+ServerCard.Skeleton = Skeleton;
 
 export default ServerCard;

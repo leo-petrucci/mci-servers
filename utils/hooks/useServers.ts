@@ -90,12 +90,15 @@ export async function getServer(id: string): Promise<ServerObjectInterface> {
 }
 export async function getServers(
   page: number,
-  date?: string
+  date?: string,
+  search?: string
 ): Promise<ServerObjectInterface[]> {
   const { feed } = await graphQLClient.request(
     gql`
       query {
-        feed (page: ${page} ${date ? `, date: "${date}"` : ''}) {
+        feed (page: ${page} ${
+      date ? `, date: "${date}"` : ''
+    }, search: "${search}") {
           id
           title
           ip
@@ -230,12 +233,13 @@ export async function postServer({
 
 export const useServers = (
   date?: string,
-  key = 'servers'
+  key = 'servers',
+  search = ''
 ): UseInfiniteQueryResult<any> =>
   useInfiniteQuery(
-    key,
+    [key, search],
     async ({ pageParam = 0 }) => {
-      const servers = await getServers(pageParam, date);
+      const servers = await getServers(pageParam, date, search);
       return servers;
     },
     {

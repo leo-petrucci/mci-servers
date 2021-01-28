@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useUserInfo } from 'utils/hooks/useUserInfo';
 import { queryClient } from 'pages/_app';
 import { useLogout } from 'utils/hooks/useLogout';
+import Skeleton from 'react-loading-skeleton';
 
 const redirectUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL}`;
 
@@ -15,7 +16,15 @@ const Auth = (): JSX.Element => {
   const router = useRouter();
   const { query } = useUserInfo();
 
-  if (query.isFetching) return <div>Loading...</div>;
+  if (query.isFetching)
+    return (
+      <div className="flex items-center">
+        <Skeleton circle width={32} height={32} />
+        <div className="ml-2">
+          <Skeleton height={16} width={64} />
+        </div>
+      </div>
+    );
 
   if (query.isError)
     return (
