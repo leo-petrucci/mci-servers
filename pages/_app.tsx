@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/globals.css';
 import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { DateTime } from 'luxon';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import type { AppProps } from 'next/app';
 import 'components/tooltip/tooltip.css';
@@ -62,6 +63,11 @@ export default function MciServers({
                 </div>
               </div>
             </main>
+          </div>
+        </div>
+        <div className="h-48 flex justify-center items-center">
+          <div className="text-gray-500">
+            © {DateTime.local().toFormat('yyyy')} Minecraft Italia
           </div>
         </div>
       </UserInfoContext>
