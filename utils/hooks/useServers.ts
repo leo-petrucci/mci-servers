@@ -167,6 +167,44 @@ export async function getServersByTag(
   return feedByTag;
 }
 
+export async function getServersByVersion(
+  version: string,
+  page: number
+): Promise<ServerObjectInterface[]> {
+  const { feedByVersion } = await graphQLClient.request(
+    gql`
+      query {
+        feedByVersion (page: ${page}, version: "${version}") {
+          id
+          title
+          ip
+          createdAt
+          voteCount
+          canVote
+          cover
+          published
+          content
+          author {
+            id
+            username
+            photoUrl
+          }
+          version {
+            id
+            versionName
+          }
+          tags {
+            id
+            tagName
+            popularity
+          }
+        }
+      }
+    `
+  );
+  return feedByVersion;
+}
+
 export async function postServer({
   title,
   content,
@@ -222,6 +260,26 @@ export const useServersByTag = (
     key,
     async ({ pageParam = 0 }) => {
       const servers = await getServersByTag(tag, pageParam);
+      return servers;
+    },
+    {
+      ...options,
+      getNextPageParam: (lastPage, allPages) => {
+        if (lastPage.length < 15) return false;
+        if (allPages.length === 10) return false;
+        return allPages.length;
+      },
+    }
+  );
+export const useServersByVersion = (
+  version: string,
+  key: string | string[],
+  options?: UseQueryOptions<any>
+): UseInfiniteQueryResult<any> =>
+  useInfiniteQuery(
+    key,
+    async ({ pageParam = 0 }) => {
+      const servers = await getServersByVersion(version, pageParam);
       return servers;
     },
     {

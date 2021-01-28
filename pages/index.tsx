@@ -9,9 +9,9 @@ import Tag from 'components/tag';
 import useIntersectionObserver from 'utils/hooks/useIntersectionObserver';
 import { useServers } from 'utils/hooks/useServers';
 import Button from 'components/button';
-import Input from 'components/forms/input';
 import Icon from 'components/icon';
-import Top from 'components/navigation/top';
+import useVersions from 'utils/hooks/useVersions';
+import Version from 'components/version';
 
 const { Title } = Typography;
 
@@ -41,6 +41,8 @@ const Home = (): JSX.Element => {
     isFetching: lastMonthIsFetching,
   } = useServers(lastMonthIso, 'topServers');
   const { data: tagData, isSuccess: tagIsSuccess } = useTags('');
+
+  const { data: versionData, isSuccess: versionIsSuccess } = useVersions('');
 
   useIntersectionObserver({
     target: loadMoreButtonRef,
@@ -72,6 +74,18 @@ const Home = (): JSX.Element => {
           <div className="flex flex-wrap">
             {tagIsSuccess &&
               tagData.map((tag) => <Tag key={tag.id} tag={tag} />)}
+          </div>
+        </div>
+        {/* Versions Container */}
+        <div className="mb-4">
+          <div className="mb-2">
+            <Title level={5}>Versioni</Title>
+          </div>
+          <div className="flex flex-wrap">
+            {versionIsSuccess &&
+              versionData.map((version) => (
+                <Version key={version.id} version={version} />
+              ))}
           </div>
         </div>
       </aside>

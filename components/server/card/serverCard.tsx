@@ -9,8 +9,12 @@ import Tag from 'components/tag';
 import Author from 'components/author';
 import slugify from 'slugify';
 import Tooltip from 'components/tooltip';
+import Typography from 'components/typography';
+import Version from 'components/version';
 import Vote from 'components/server/vote';
 import Skeleton from './skeleton';
+
+const { Title } = Typography;
 
 const ServerCard = ({
   server,
@@ -23,6 +27,7 @@ const ServerCard = ({
     title,
     voteCount,
     cover,
+    version,
     published,
     author,
     tags,
@@ -59,15 +64,18 @@ const ServerCard = ({
         <div className="col-span-10">
           <div
             style={{ backgroundImage: `url(${cover})` }}
-            className="grid grid-cols-12 bg-cover self-stretch col-span-4 bg-center rounded-md h-36 overflow-hidden"
+            className="relative bg-cover self-stretch bg-center rounded-md h-36 overflow-hidden"
           >
             <div
-              className="col-span-full flex items-end p-2"
+              className="relative flex items-end h-full p-2"
               style={{
                 background:
                   ' linear-gradient(0deg, rgba(76,76,76,0.7) 0%, rgba(0,0,0,0) 100%)',
               }}
             >
+              <div className="absolute top-0 right-0 py-2">
+                {version && <Version key={version.id} version={version} />}
+              </div>
               <h3 className="text-xl font-semibold tracking-tight text-white">
                 <Link href={`/server/${id}/${slugify(title)}`}>{title}</Link>
               </h3>
@@ -86,6 +94,9 @@ const ServerCard = ({
             />
           </div>
           <div className="col-span-6 px-2 pt-4">
+            <div className="mb-2">
+              <Title level={5}>Tags</Title>
+            </div>
             <div className="flex flex-wrap">
               {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
             </div>
