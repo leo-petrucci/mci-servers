@@ -8,8 +8,8 @@ import Icon from 'components/icon';
 import Tag from 'components/tag';
 import Author from 'components/author';
 import slugify from 'slugify';
-import Vote from '../vote';
 import Tooltip from 'components/tooltip';
+import Vote from 'components/server/vote';
 
 const ServerCard = ({
   server,
