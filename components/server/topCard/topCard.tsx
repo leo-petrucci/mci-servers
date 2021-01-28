@@ -7,6 +7,7 @@ import Typography from 'components/typography';
 import Button from 'components/button';
 import Icon from 'components/icon';
 import Tag from 'components/tag';
+import Skeleton from './skeleton';
 
 const { Paragraph, Title } = Typography;
 
@@ -59,5 +60,7 @@ const TopCard = ({
     </>
   );
 };
+
+TopCard.Skeleton = Skeleton;
 
 export default TopCard;

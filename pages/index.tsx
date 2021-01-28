@@ -11,6 +11,7 @@ import { useServers } from 'utils/hooks/useServers';
 import Button from 'components/button';
 import Input from 'components/forms/input';
 import Icon from 'components/icon';
+import Top from 'components/navigation/top';
 
 const { Title } = Typography;
 
@@ -34,10 +35,11 @@ const Home = (): JSX.Element => {
     isFetchingNextPage,
   } = useServers(null, 'servers', search);
   const { lastMonthIso, lastMonthName } = useLastMonth();
-  const { data: lastmonthData, isSuccess: lastmonthIsSuccess } = useServers(
-    lastMonthIso,
-    'topServers'
-  );
+  const {
+    data: lastmonthData,
+    isSuccess: lastmonthIsSuccess,
+    isFetching: lastMonthIsFetching,
+  } = useServers(lastMonthIso, 'topServers');
   const { data: tagData, isSuccess: tagIsSuccess } = useTags('');
 
   useIntersectionObserver({
@@ -53,10 +55,12 @@ const Home = (): JSX.Element => {
           {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
           <Title level={2}>Il top server di {lastMonthName}</Title>
         </div>
-        {lastmonthIsSuccess && lastmonthData.pages[0].length ? (
+        {lastmonthIsSuccess &&
+        !lastMonthIsFetching &&
+        lastmonthData.pages[0].length ? (
           <TopCard server={lastmonthData.pages[0][0]} />
         ) : (
-          'Loading...'
+          <TopCard.Skeleton />
         )}
       </div>
       <aside className="col-span-2 py-4">
