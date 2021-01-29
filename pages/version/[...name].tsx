@@ -1,4 +1,5 @@
 import Button from 'components/button';
+import Head from 'next/head';
 import ServerCard from 'components/server/card';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
@@ -29,6 +30,52 @@ const VersionPage = (): JSX.Element => {
 
   return (
     <>
+      <Head>
+        <meta charSet="UTF-8" />
+        <title>
+          {router.query.name && router.query.name} -Minecraft Italia Lista
+          Server
+        </title>
+        <meta
+          name="description"
+          content={`Server Minecraft italiani versione ${router.query.name}`}
+        />
+        <meta name="robots" content="index, follow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          property="og:title"
+          content={`${
+            router.query.name && router.query.name
+          } - Minecraft Italia Lista Server`}
+        />
+        <meta
+          property="og:description"
+          content={`Server Minecraft italiani versione ${router.query.name}`}
+        />
+        {/* <meta property="og:image" content={cover} /> */}
+        <meta
+          property="og:url"
+          content={`https://servers.minecraftitalia.net/version/${router.query.name}`}
+        />
+        <meta
+          name="twitter:title"
+          content={`${
+            router.query.name && router.query.name
+          } - Minecraft Italia Lista Server`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Server Minecraft italiani versione ${router.query.name}`}
+        />
+        {/* <meta name="twitter:image" content={cover} /> */}
+        {/* <meta name="twitter:card" content="summary_large_image" /> */}
+        <meta
+          property="og:site_name"
+          content={`${
+            router.query.name && router.query.name
+          } - Minecraft Italia Lista Server`}
+        />
+      </Head>
       <div className="grid grid-cols-12">
         {isSuccess && !isFetching && data.pages.length ? (
           <>
