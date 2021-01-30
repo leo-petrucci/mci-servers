@@ -96,9 +96,9 @@ export async function getServers(
   const { feed } = await graphQLClient.request(
     gql`
       query {
-        feed (page: ${page} ${
-      date ? `, date: "${date}"` : ''
-    }, search: "${search}") {
+        feed (page: ${page}, ${
+      date ? ` date: "${date}",` : ''
+    } search: "${search}") {
           id
           title
           ip

@@ -13,8 +13,9 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import useVersions from 'utils/hooks/useVersions';
 import Version from 'components/version';
+import Skeleton from 'react-loading-skeleton';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Home = (): JSX.Element => {
   const [search, setSearch] = useState('');
@@ -83,19 +84,34 @@ const Home = (): JSX.Element => {
       </Head>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-full">
-          <div className="mb-4">
-            {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
-            <Title level={2}>Il top server di {lastMonthName}</Title>
-          </div>
-          {lastmonthIsSuccess &&
-          !lastMonthIsFetching &&
-          lastmonthData.pages[0].length ? (
-            <TopCard server={lastmonthData.pages[0][0]} />
+          {lastmonthIsSuccess && !lastMonthIsFetching ? (
+            <>
+              {lastmonthData.pages[0].length ? (
+                <>
+                  <div className="mb-4">
+                    {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
+                    <Title level={2}>Il top server di {lastMonthName}</Title>
+                  </div>
+                  <TopCard server={lastmonthData.pages[0][0]} />
+                </>
+              ) : (
+                <div className="col-span-full flex justify-center mb-4">
+                  <Text type="secondary">
+                    Il top server non é ancora stato deciso.
+                  </Text>
+                </div>
+              )}
+            </>
           ) : (
-            <TopCard.Skeleton />
+            <>
+              <div className="mb-4">
+                <Skeleton height={32} width={128} />
+              </div>
+              <TopCard.Skeleton />
+            </>
           )}
         </div>
-        <aside className="col-span-2 py-4">
+        <aside className="col-span-full lg:col-span-2">
           {/* Tags Container */}
           <div className="mb-4">
             <div className="mb-2">
@@ -119,13 +135,13 @@ const Home = (): JSX.Element => {
             </div>
           </div>
         </aside>
-        <div className="col-span-10 py-4">
+        <div className="col-span-full lg:col-span-10">
           <div className="mb-4">
             {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
             <Title level={2}>I nostri server più poplari</Title>
           </div>
           <div className="grid grid-cols-12 mb-4">
-            <div className="flex items-center col-start-9 col-span-4 shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-400">
+            <div className="flex items-center col-span-full lg:col-start-9 lg:col-span-4 shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-400">
               <input
                 onChange={throttledSearch}
                 type="text"
@@ -146,9 +162,17 @@ const Home = (): JSX.Element => {
               {data.pages.map((page, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={i}>
-                  {page.map((server) => (
-                    <ServerCard key={server.id} server={server} />
-                  ))}
+                  {page.length ? (
+                    page.map((server) => (
+                      <ServerCard key={server.id} server={server} />
+                    ))
+                  ) : (
+                    <div className="col-span-full flex justify-center mb-4">
+                      <Text type="secondary">
+                        Non abbiamo trovato alcun server.
+                      </Text>
+                    </div>
+                  )}
                 </React.Fragment>
               ))}
             </div>
@@ -156,7 +180,8 @@ const Home = (): JSX.Element => {
             <div className="grid grid-cols-12">
               {Array(10)
                 .fill(0)
-                .map((i) => (
+                .map((n, i) => (
+                  // eslint-disable-next-line react/no-array-index-key
                   <ServerCard.Skeleton key={i} />
                 ))}
             </div>

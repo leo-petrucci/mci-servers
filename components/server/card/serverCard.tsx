@@ -37,7 +37,7 @@ const ServerCard = ({
   return (
     <>
       <article
-        className={`relative col-span-12 lg:col-span-4 md:col-span-6 grid grid-cols-12 mb-4 p-2 ${
+        className={`relative col-span-12 lg:col-span-4 md:col-span-6 grid grid-cols-12 mb-4 lg:p-2 ${
           !published && 'opacity-50'
         }`}
       >
@@ -58,7 +58,7 @@ const ServerCard = ({
             </div>
           </Tooltip>
         )}
-        <div className="col-span-2 px-2">
+        <div className="col-span-2 pr-2">
           <Vote voteCount={voteCount} serverId={id} canVote={canVote} />
         </div>
         <div className="col-span-10">
