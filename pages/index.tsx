@@ -95,7 +95,7 @@ const Home = (): JSX.Element => {
                   <TopCard server={lastmonthData.pages[0][0]} />
                 </>
               ) : (
-                <div className="col-span-full flex justify-center mb-4">
+                <div className="col-span-full flex mb-4">
                   <Text type="secondary">
                     Il top server non é ancora stato deciso.
                   </Text>
