@@ -87,8 +87,7 @@ const Home = (): JSX.Element => {
             {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
             <Title level={2}>Il top server di {lastMonthName}</Title>
           </div>
-          {false &&
-          lastmonthIsSuccess &&
+          {lastmonthIsSuccess &&
           !lastMonthIsFetching &&
           lastmonthData.pages[0].length ? (
             <TopCard server={lastmonthData.pages[0][0]} />
