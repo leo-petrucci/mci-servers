@@ -98,7 +98,11 @@ const ServerCard = ({
               <Title level={5}>Tags</Title>
             </div>
             <div className="flex flex-wrap">
-              {tags && tags.map((tag) => <Tag key={tag.id} tag={tag} />)}
+              {tags &&
+                tags.map((tag, i) => {
+                  if (i > 5) return null;
+                  return <Tag key={tag.id} tag={tag} />;
+                })}
             </div>
           </div>
           <div className="pt-2">
