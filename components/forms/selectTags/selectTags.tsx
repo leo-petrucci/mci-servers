@@ -46,6 +46,11 @@ const SelectTags = (): JSX.Element => {
         type: 'manual',
         message: 'Devi usare almeno una tag.',
       });
+    } else if (value && value.length > 10) {
+      form.setError('tags', {
+        type: 'manual',
+        message: 'Puoi solo aggiungere 10 tag o meno.',
+      });
     } else {
       form.clearErrors('tags');
     }
