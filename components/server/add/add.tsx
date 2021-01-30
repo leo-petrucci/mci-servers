@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import dynamic from 'next/dynamic';
 import Form from 'components/forms/form';
 import Input from 'components/forms/input';
@@ -13,7 +14,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 const EditorComponent = dynamic(() => import('./editor'), { ssr: false });
 
@@ -95,13 +96,30 @@ const AddServer = ({
     });
   };
 
+  const [rules, setRules] = useState('');
+
+  useEffect(() => {
+    const loadRules = async () => {
+      // eslint-disable-next-line global-require
+      const content = await require(`./rules.md`);
+      setRules(content.default);
+    };
+    loadRules();
+  }, []);
+
   return (
     <div className="grid grid-cols-12 gap-4">
-      <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
-        Sidebar
+      <aside className="col-span-full lg:col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
+        <div className="mb-2">
+          <Title level={5}>Regole</Title>
+        </div>
+
+        <div className="prose">
+          <ReactMarkdown>{rules}</ReactMarkdown>
+        </div>
       </aside>
 
-      <main className="col-span-8 pr-4 py-4">
+      <main className="col-span-full lg:col-span-8 pr-4 py-4">
         <Form {...layout} form={form}>
           <Form.Item
             label="Nome del server"
@@ -208,7 +226,7 @@ const AddServer = ({
                   confirm({
                     title: 'Sei sicuro di voler postare questo server?',
                     content:
-                      'Assicurati che tutte le informazioni siano corrette.',
+                      'Aggiungere una buona descrizione e molte immagini é molto importante, assicurati di aver scritto abbastanza da interessare altri utenti!',
                     // eslint-disable-next-line no-console
                     onOk: () => {
                       onSubmit(form.getValues() as ServerPostInterface);

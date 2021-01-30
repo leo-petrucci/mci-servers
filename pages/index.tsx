@@ -13,8 +13,9 @@ import Button from 'components/button';
 import Icon from 'components/icon';
 import useVersions from 'utils/hooks/useVersions';
 import Version from 'components/version';
+import Skeleton from 'react-loading-skeleton';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Home = (): JSX.Element => {
   const [search, setSearch] = useState('');
@@ -83,16 +84,31 @@ const Home = (): JSX.Element => {
       </Head>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-full">
-          <div className="mb-4">
-            {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
-            <Title level={2}>Il top server di {lastMonthName}</Title>
-          </div>
-          {lastmonthIsSuccess &&
-          !lastMonthIsFetching &&
-          lastmonthData.pages[0].length ? (
-            <TopCard server={lastmonthData.pages[0][0]} />
+          {lastmonthIsSuccess && !lastMonthIsFetching ? (
+            <>
+              {lastmonthData.pages[0].length ? (
+                <>
+                  <div className="mb-4">
+                    {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
+                    <Title level={2}>Il top server di {lastMonthName}</Title>
+                  </div>
+                  <TopCard server={lastmonthData.pages[0][0]} />
+                </>
+              ) : (
+                <div className="col-span-full flex justify-center mb-4">
+                  <Text type="secondary">
+                    Il top server non é ancora stato deciso.
+                  </Text>
+                </div>
+              )}
+            </>
           ) : (
-            <TopCard.Skeleton />
+            <>
+              <div className="mb-4">
+                <Skeleton height={32} width={128} />
+              </div>
+              <TopCard.Skeleton />
+            </>
           )}
         </div>
         <aside className="col-span-full lg:col-span-2">
@@ -146,9 +162,17 @@ const Home = (): JSX.Element => {
               {data.pages.map((page, i) => (
                 // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={i}>
-                  {page.map((server) => (
-                    <ServerCard key={server.id} server={server} />
-                  ))}
+                  {page.length ? (
+                    page.map((server) => (
+                      <ServerCard key={server.id} server={server} />
+                    ))
+                  ) : (
+                    <div className="col-span-full flex justify-center mb-4">
+                      <Text type="secondary">
+                        Non abbiamo trovato alcun server.
+                      </Text>
+                    </div>
+                  )}
                 </React.Fragment>
               ))}
             </div>
