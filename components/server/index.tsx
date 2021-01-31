@@ -87,7 +87,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
           </div>
         )}
         {/* Sidebar */}
-        <aside className="col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">
+        <aside className="col-span-full order-2 lg:col-span-3 lg:px-4 lg:pb-4 lg:mt-4 border-r border-gray-100">
           {/* Profile Container */}
           <div className="mb-4">
             <div className="mb-2">
@@ -153,10 +153,10 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
             ))}
           </div>
         </aside>
-        <div className="col-span-1 py-4">
+        <div className="col-span-2 lg:col-span-1 lg:py-4">
           <Vote voteCount={voteCount} serverId={id} canVote={canVote} />
         </div>
-        <main className="col-span-8 pr-4 py-4">
+        <main className="col-span-10 lg:col-span-8 lg:pr-4 lg:py-4">
           <div
             className="mb-4 h-64 w-full bg-cover bg-center rounded-md overflow-hidden"
             style={{ backgroundImage: `url(${cover})` }}
