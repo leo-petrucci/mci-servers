@@ -107,6 +107,8 @@ const AddServer = ({
     loadRules();
   }, []);
 
+  console.log(form);
+
   return (
     <div className="grid grid-cols-12 gap-4">
       <aside className="col-span-full lg:col-span-3 px-4 pb-4 mt-4 border-r border-gray-100">

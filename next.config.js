@@ -4,6 +4,10 @@ module.exports = {
       test: /\.md$/,
       use: 'raw-loader',
     });
+    config.module.rules.push({
+      test: /react-spring/,
+      sideEffects: true,
+    });
 
     return config;
   },
