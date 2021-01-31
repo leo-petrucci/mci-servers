@@ -9,7 +9,11 @@ import MultipleSelect from 'components/forms/selectTags';
 import Cover from 'components/forms/cover';
 import Ip from 'components/forms/ip';
 import confirm from 'components/modal/confirm';
-import { ServerPostInterface, useCreateServer } from 'utils/hooks/useServers';
+import {
+  ServerPostInterface,
+  useCreateServer,
+  useUpdateServer,
+} from 'utils/hooks/useServers';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import slugify from 'slugify';
@@ -96,6 +100,47 @@ const AddServer = ({
     });
   };
 
+  const editMutation = useUpdateServer();
+
+  const onEdit = (body: ServerPostInterface) => {
+    const serverPayload = {
+      ...body,
+    };
+
+    if (serverId) {
+      serverPayload.id = serverId;
+    }
+
+    const serverToastId = toast.loading(
+      serverId ? 'Modificando il tuo server...' : 'Postando il tuo server...'
+    );
+    editMutation.mutate(serverPayload, {
+      onError: () => {
+        toast.error(
+          serverId
+            ? "C'e' stato un problema nel modificare il tuo server."
+            : "C'e' stato un problema nel postare il tuo server.",
+          {
+            id: serverToastId,
+            duration: 5000,
+          }
+        );
+      },
+      onSuccess: (res) => {
+        toast.success(
+          serverId
+            ? "Il tuo server e' stato modificato."
+            : "Il tuo server e' stato postato.",
+          {
+            id: serverToastId,
+            duration: 5000,
+          }
+        );
+        router.push(`/server/${res.id}/${slugify(res.title)}`);
+      },
+    });
+  };
+
   const [rules, setRules] = useState('');
 
   useEffect(() => {
@@ -106,8 +151,6 @@ const AddServer = ({
     };
     loadRules();
   }, []);
-
-  console.log(form);
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -221,26 +264,52 @@ const AddServer = ({
           </div>
         </Form>
         <div className="flex justify-end">
-          <Button
-            onClick={async () => {
-              form.trigger().then((res) => {
-                if (res)
-                  confirm({
-                    title: 'Sei sicuro di voler postare questo server?',
-                    content:
-                      'Aggiungere una buona descrizione e molte immagini é molto importante, assicurati di aver scritto abbastanza da interessare altri utenti!',
-                    // eslint-disable-next-line no-console
-                    onOk: () => {
-                      onSubmit(form.getValues() as ServerPostInterface);
-                    },
-                    // eslint-disable-next-line no-console
-                    onCancel: () => console.log('Cancelled'),
-                  });
-              });
-            }}
-          >
-            {submitText}
-          </Button>
+          {serverId ? (
+            <Button
+              onClick={async () => {
+                form.trigger().then((res) => {
+                  if (res)
+                    confirm({
+                      title: 'Sei sicuro di voler postare questo server?',
+                      content:
+                        'Aggiungere una buona descrizione e molte immagini é molto importante, assicurati di aver scritto abbastanza da interessare altri utenti!',
+                      // eslint-disable-next-line no-console
+                      onOk: () => {
+                        onEdit({
+                          ...form.getValues(),
+                          id: serverId,
+                        } as ServerPostInterface);
+                      },
+                      // eslint-disable-next-line no-console
+                      onCancel: () => console.log('Cancelled'),
+                    });
+                });
+              }}
+            >
+              {submitText}
+            </Button>
+          ) : (
+            <Button
+              onClick={async () => {
+                form.trigger().then((res) => {
+                  if (res)
+                    confirm({
+                      title: 'Sei sicuro di voler postare questo server?',
+                      content:
+                        'Aggiungere una buona descrizione e molte immagini é molto importante, assicurati di aver scritto abbastanza da interessare altri utenti!',
+                      // eslint-disable-next-line no-console
+                      onOk: () => {
+                        onSubmit(form.getValues() as ServerPostInterface);
+                      },
+                      // eslint-disable-next-line no-console
+                      onCancel: () => console.log('Cancelled'),
+                    });
+                });
+              }}
+            >
+              {submitText}
+            </Button>
+          )}
         </div>
       </main>
     </div>

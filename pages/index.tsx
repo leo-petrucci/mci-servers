@@ -115,7 +115,7 @@ const Home = (): JSX.Element => {
           {/* Tags Container */}
           <div className="mb-4">
             <div className="mb-2">
-              <Title level={5}>Tags poplari</Title>
+              <Title level={5}>Tags popolari</Title>
             </div>
             <div className="flex flex-wrap">
               {tagIsSuccess &&
@@ -138,7 +138,7 @@ const Home = (): JSX.Element => {
         <div className="col-span-full lg:col-span-10">
           <div className="mb-4">
             {/* eslint-disable-next-line react/jsx-curly-brace-presence */}
-            <Title level={2}>I nostri server più poplari</Title>
+            <Title level={2}>I nostri server più popolari</Title>
           </div>
           <div className="grid grid-cols-12 mb-4">
             <div className="flex items-center col-span-full lg:col-start-9 lg:col-span-4 shadow-sm transition border border-gray-200 rounded-md px-3 h-10 focus:outline-none focus:ring-2 focus:ring-blue-100 w-full invalid:border-red-600 placeholder-gray-400">

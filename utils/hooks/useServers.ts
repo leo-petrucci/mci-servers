@@ -231,6 +231,34 @@ export async function postServer({
   return createServer;
 }
 
+export async function editServer({
+  id,
+  title,
+  content,
+  tags,
+  ip,
+  cover,
+}: ServerPostInterface): Promise<ServerObjectInterface> {
+  const { updateServer } = await graphQLClient.request(
+    gql`
+      mutation {
+        updateServer (
+          id: ${id},
+          title: "${title}",
+          content: """${content}""",
+          tags: ${JSON.stringify(tags)},
+          ip: "${ip}",
+          cover: "${cover}",
+        ) {
+          id
+          title
+        }
+      }
+    `
+  );
+  return updateServer;
+}
+
 export const useServers = (
   date?: string,
   key = 'servers',
@@ -308,5 +336,11 @@ export const useServer = (
 export const useCreateServer = (): UseMutationResult<ServerObjectInterface> =>
   useMutation('addServer', async (body: ServerPostInterface) => {
     const server = await postServer(body);
+    return server;
+  });
+
+export const useUpdateServer = (): UseMutationResult<ServerObjectInterface> =>
+  useMutation('updateServer', async (body: ServerPostInterface) => {
+    const server = await editServer(body);
     return server;
   });
