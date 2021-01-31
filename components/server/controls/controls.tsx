@@ -1,3 +1,4 @@
+import Button from 'components/button';
 import Icon from 'components/icon';
 import confirm from 'components/modal/confirm';
 import { useRouter } from 'next/router';
@@ -15,15 +16,15 @@ const Controls = ({ serverId }: { serverId: number }): JSX.Element => {
     <>
       {/* @ts-ignore */}
       <div ref={profileRef} className="flex items-center">
-        <button
-          type="button"
+        <Button
           onClick={() => setClicked(!clicked)}
-          className="focus:outline-none text-white"
+          className="focus:outline-none text-black"
         >
+          Modifica
           <Icon>
             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
           </Icon>
-        </button>
+        </Button>
         {clicked && (
           // eslint-disable-next-line @typescript-eslint/no-use-before-define
           <Dropdown
