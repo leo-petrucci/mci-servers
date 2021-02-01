@@ -1,4 +1,7 @@
 import React from 'react';
+import ReactGA from 'react-ga';
+import Head from 'next/head';
+import Router, { useRouter } from 'next/router';
 import '../styles/globals.css';
 import '../styles/react-mde-all.css';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -8,9 +11,14 @@ import type { AppProps } from 'next/app';
 import 'components/tooltip/tooltip.css';
 import Top from 'components/navigation/top';
 import { GraphQLClient } from 'graphql-request';
-import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 import UserInfoContext from 'utils/hooks/useUserInfo';
+
+ReactGA.initialize('UA-144570559-1');
+
+Router.events.on('routeChangeStart', (url) => {
+  ReactGA.pageview(url);
+});
 
 const endpoint = `${process.env.NEXT_PUBLIC_API_URL}`;
 
@@ -46,6 +54,23 @@ export default function MciServers({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Head>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_ANALYTICS}`}
+        />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', '${process.env.NEXT_PUBLIC_ANALYTICS}');`,
+          }}
+        />
+      </Head>
       <UserInfoContext>
         <div>
           <Toaster />
