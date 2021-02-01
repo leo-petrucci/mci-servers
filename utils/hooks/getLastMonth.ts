@@ -8,7 +8,7 @@ interface UseLastMonthInterface {
 const useLastMonth = (): UseLastMonthInterface => {
   const x = new Date();
   x.setDate(1);
-  x.setHours(0);
+  x.setUTCHours(0);
   x.setMinutes(0);
   x.setSeconds(0);
   x.setMilliseconds(0);
