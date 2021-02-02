@@ -14,7 +14,7 @@ import { GraphQLClient } from 'graphql-request';
 import { Toaster } from 'react-hot-toast';
 import UserInfoContext from 'utils/hooks/useUserInfo';
 
-ReactGA.initialize('UA-144570559-1');
+ReactGA.initialize(process.env.NEXT_PUBLIC_ANALYTICS);
 
 Router.events.on('routeChangeStart', (url) => {
   ReactGA.pageview(url);
