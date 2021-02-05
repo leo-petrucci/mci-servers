@@ -44,7 +44,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
   const { data, status } = useInfo(ip);
 
   useEffect(() => {
-    if (status === 'success') {
+    if (status === 'success' && data.online) {
       setInfo(data);
     }
   }, [status, data]);
