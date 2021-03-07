@@ -21,7 +21,7 @@ const ServerPage = ({
     enabled: Boolean(router.query.id),
   });
 
-  if (isSuccess && !data) return <Server server={data} />;
+  if (isSuccess && data.title) return <Server server={data} />;
   return <Server server={server} />;
 
   // if (server && !data) return <Server server={server} />;
