@@ -22,11 +22,9 @@ const ServerPage = ({
   });
 
   if (isSuccess && data.title) return <Server server={data} />;
-  return <Server server={server} />;
+  if (server) return <Server server={server} />;
 
-  // if (server && !data) return <Server server={server} />;
-  // if (isFetching) return <>Loading...</>;
-  // return <Server server={data} />;
+  return <></>;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
