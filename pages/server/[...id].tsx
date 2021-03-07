@@ -18,10 +18,10 @@ const ServerPage = ({
 }): JSX.Element => {
   const router = useRouter();
   const { data, isSuccess } = useServer(router.query.id && router.query.id[0], {
-    enabled: false,
+    enabled: Boolean(router.query.id),
   });
 
-  if (isSuccess) return <Server server={data} />;
+  if (isSuccess && !data) return <Server server={data} />;
   return <Server server={server} />;
 
   // if (server && !data) return <Server server={server} />;
