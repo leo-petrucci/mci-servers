@@ -13,6 +13,7 @@ export interface ServerInfoInterface {
   online: boolean;
   icon?: string;
   hostname: string;
+  ip: string;
 }
 
 export async function getInfo(ip: string): Promise<ServerInfoInterface> {

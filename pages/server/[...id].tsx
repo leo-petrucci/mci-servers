@@ -17,13 +17,14 @@ const ServerPage = ({
   server: ServerObjectInterface;
 }): JSX.Element => {
   const router = useRouter();
-  const { data, isFetching } = useServer(
-    router.query.id && router.query.id[0],
-    {}
-  );
-  if (server && !data) return <Server server={server} />;
-  if (isFetching) return <>Loading...</>;
-  return <Server server={data} />;
+  const { data, isSuccess } = useServer(router.query.id && router.query.id[0], {
+    enabled: Boolean(router.query.id),
+  });
+
+  if (isSuccess && data.title) return <Server server={data} />;
+  if (server) return <Server server={server} />;
+
+  return <></>;
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {

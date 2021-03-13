@@ -1,16 +1,16 @@
 import React from 'react';
+import { ServerInfoInterface } from 'utils/hooks/useServerInfo';
 
 interface StatusPropsInterface {
-  online: boolean;
-  slots: string;
+  info: ServerInfoInterface;
 }
 
-const Status = ({ online, slots }: StatusPropsInterface): JSX.Element => (
+const Status = ({ info }: StatusPropsInterface): JSX.Element => (
   <div className="text-gray-600 text-sm flex items-center">
-    {slots}
+    {info.online ? `${info.players.online}/${info.players.max}` : '0/0'}
     <div
       className={`ml-2 h-2 w-2 rounded-full ${
-        online ? 'bg-green-500' : 'bg-red-500'
+        info.online ? 'bg-green-500' : 'bg-red-500'
       }`}
     />
   </div>
