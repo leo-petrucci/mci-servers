@@ -44,7 +44,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
   const { data, status } = useInfo(ip);
 
   useEffect(() => {
-    if (status === 'success' && data.online) {
+    if (status === 'success' && data.ip) {
       setInfo(data);
     }
   }, [status, data]);
@@ -126,10 +126,7 @@ const Server = ({ server }: ServerInterface): JSX.Element => {
               <Title level={5}>Status</Title>
             </div>
             {/* eslint-disable-next-line react/jsx-boolean-value */}
-            <Status
-              slots={`${info.players.online}/${info.players.max}`}
-              online={info.online}
-            />
+            <Status info={info} />
           </div>
           {/* Ip Container */}
           <div className="mb-4">
