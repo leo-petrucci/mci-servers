@@ -44,7 +44,11 @@ export async function getUser(): Promise<AuthorInterface> {
       await graphQLClient.request(
         gql`
           mutation {
-            refresh
+            refresh {
+              user {
+                username
+              }
+            }
           }
         `
       );
