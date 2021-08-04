@@ -9,3 +9,5 @@ Features:
 - oAuth login with Invision Power Board
 
 Check it out at [https://servers.minecraftitalia.net/](https://servers.minecraftitalia.net/).
+
+Trigger update
