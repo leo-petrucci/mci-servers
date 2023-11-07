@@ -35,30 +35,30 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {
-    allServers,
-  }: { allServers: ServerObjectInterface[] } = await graphQLClient.request(
-    gql`
-      query {
-        allServers {
-          id
-          title
-          voteCount
-        }
-      }
-    `
-  );
+  // const {
+  //   allServers,
+  // }: { allServers: ServerObjectInterface[] } = await graphQLClient.request(
+  //   gql`
+  //     query {
+  //       allServers {
+  //         id
+  //         title
+  //         voteCount
+  //       }
+  //     }
+  //   `
+  // );
 
-  let paths = allServers.map((server) => ({
-    params: {
-      id: [server.id.toString(), slugify(server.title)],
-    },
-  }));
+  // let paths = allServers.map((server) => ({
+  //   params: {
+  //     id: [server.id.toString(), slugify(server.title)],
+  //   },
+  // }));
 
-  paths = paths.filter((server) => server !== null);
+  // paths = paths.filter((server) => server !== null);
 
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
