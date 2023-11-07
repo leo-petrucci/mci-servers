@@ -11,4 +11,18 @@ module.exports = {
 
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: 'https://www.minecraftitalia.net/lista-server',
+        permanent: false,
+      },
+      {
+        source: '/server/:id/',
+        destination: 'https://www.minecraftitalia.net/lista-server/server/:id',
+        permanent: false,
+      },
+    ]
+  },
 };
