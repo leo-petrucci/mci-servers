@@ -19,7 +19,7 @@ module.exports = {
         permanent: false,
       },
       {
-        source: '/server/:id/',
+        source: '/server/:id/:serverName*',
         destination: 'https://www.minecraftitalia.net/lista-server/server/:id',
         permanent: false,
       },
